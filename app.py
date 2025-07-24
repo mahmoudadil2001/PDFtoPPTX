@@ -1,17 +1,17 @@
 import os
 import importlib.util
 import streamlit as st
-from ppt_generator import create_ppt  # عدلنا الاستيراد هنا ليتوافق مع اسم الدالة الصحيح
+from ppt_generator import create_ppt
 
 LECTURES_DIR = "lectures"
 
 def list_lecture_files():
-    # يعرض فقط ملفات بايثون داخل مجلد المحاضرات
-    return [f for f in os.listdir(LECTURES_DIR) if f.endswith(".py")]
+    # يعرض فقط ملفات .py بدون الملفات التي تبدأ بـ __ أو تحتوي على مسافات
+    return [f for f in os.listdir(LECTURES_DIR) if f.endswith(".py") and not f.startswith("__") and " " not in f]
 
 def load_lecture_module(filename):
     path = os.path.join(LECTURES_DIR, filename)
-    spec = importlib.util.spec_from_file_location("lecture", path)
+    spec = importlib.util.spec_from_file_location("lecture_module", path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -33,12 +33,12 @@ else:
 
         output_name = f"{title.replace(' ', '_')}.pptx"
 
-        # استدعاء دالة توليد الباوربوينت
+        st.write(f"📄 يتم الآن إنشاء PowerPoint من: `{selected}` بعنوان: `{title}`")
+
         create_ppt(title, slides, output_name)
 
-        st.success(f"تم إنشاء ملف PowerPoint: {output_name}")
+        st.success(f"✅ تم إنشاء ملف PowerPoint: {output_name}")
 
-        # زر تحميل الملف الناتج
         with open(output_name, "rb") as file:
             st.download_button(
                 label="⬇️ حمل ملف PowerPoint",
