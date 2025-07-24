@@ -6,12 +6,13 @@ from ppt_generator import create_ppt
 LECTURES_DIR = "lectures"
 
 def list_lecture_files():
-    # يعرض فقط ملفات .py بدون الملفات التي تبدأ بـ __ أو تحتوي على مسافات
-    return [f for f in os.listdir(LECTURES_DIR) if f.endswith(".py") and not f.startswith("__") and " " not in f]
+    # يعرض فقط ملفات .py بدون المسافات
+    return [f for f in os.listdir(LECTURES_DIR) if f.endswith(".py") and " " not in f]
 
 def load_lecture_module(filename):
     path = os.path.join(LECTURES_DIR, filename)
-    spec = importlib.util.spec_from_file_location("lecture_module", path)
+    module_name = filename.replace(".py", "")  # اسم مميز لكل محاضرة
+    spec = importlib.util.spec_from_file_location(module_name, path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
