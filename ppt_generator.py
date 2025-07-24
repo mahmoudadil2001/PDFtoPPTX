@@ -3,8 +3,8 @@ from pptx.util import Inches, Pt
 
 def create_ppt(title, slides, output_file, max_words_per_slide=130):
     prs = Presentation()
-    # الشريحة الأولى - العنوان الرئيسي
-    slide_layout = prs.slide_layouts[0]  # Title Slide
+
+    slide_layout = prs.slide_layouts[0]
     slide = prs.slides.add_slide(slide_layout)
     slide.shapes.title.text = title
     slide.placeholders[1].text = "Generated Automatically"
@@ -18,7 +18,7 @@ def create_ppt(title, slides, output_file, max_words_per_slide=130):
         current_word_count = 0
 
         def add_slide(content_points, show_subtitle):
-            slide_layout = prs.slide_layouts[1]  # Title and Content
+            slide_layout = prs.slide_layouts[1]
             slide = prs.slides.add_slide(slide_layout)
             slide.shapes.title.text = slide_title
 
@@ -64,28 +64,3 @@ def create_ppt(title, slides, output_file, max_words_per_slide=130):
 
     prs.save(output_file)
     print(f"[✔] PowerPoint saved as: {output_file}")
-
-# اختبار سريع
-if __name__ == "__main__":
-    title = "Oral Pathology - Sample Lecture"
-    slides = [
-        {
-            "title": "Introduction",
-            "subtitle": "Biopsy Principles and Techniques",
-            "content": [
-                "Oral and maxillofacial pathology is the specialty of dentistry...",
-                "Surgical pathology deals with diagnosis by microscopic examination...",
-                # أضف نقاط أكثر لتجربة التقسيم
-            ]
-        },
-        {
-            "title": "Types of Biopsy",
-            "subtitle": "Based on Size and Instruments",
-            "content": [
-                "Incisional biopsy samples part of the lesion.",
-                "Excisional biopsy removes the entire lesion.",
-                "Cautery biopsy is least suitable for microscopic interpretation."
-            ]
-        }
-    ]
-    create_ppt(title, slides, "sample_lecture.pptx")
