@@ -1,274 +1,232 @@
-title = "Oral Pathology - Lecture 2: Dental Caries"
+title = "Oral Pathology - Lecture 3: Disorders of the Dental Pulp"
 
 slides = [
-    {"title": "Definition of Dental Caries",
+    {"title": "Introduction",
      "content": [
-         "Dental caries is a multifaceted disease involving interplay among the teeth, the oral host factor of saliva and microflora, and the external factor (diet).",
-         "It is a unique form of infection in which specific strains of bacteria accumulate on the enamel surface, where they elaborate acidic and proteolytic products that demineralize the surface and digest (destruct) its organic matrix."
+         "The most significant diagnostic problem that the dentists may face in their practice is to determine the extent of the pulp disease that has taken place within a symptomatic (painful) tooth.",
+         "An evaluation of the damage to the pulpal tissue is essential, since the pulp can neither be seen nor touched, an indirect assessment is required.",
+         "Inflammation is the single most important disease process affecting the dental pulp and accounts for virtually all pulpal diseases of any clinical significance.",
+         "The decision to be made by the dentist based on clinical assessment of the pattern of pulp inflammation (pulpitis) is one of three :-",
+         "1- To restore the defective tooth structure ((conservative)).",
+         "2- To remove the pulp tissue ((endodontic)).",
+         "3- To remove the entire tooth.",
+         "In making such a decision, the clinician should decide whether the pulp damage ((pulpitis)) is reversible or irreversible pulpitis."
      ]},
 
-    {"title": "Epidemiology of Dental Caries",
+    {"title": "Pulpitis",
      "content": [
-         "Dental caries has been recognized throughout history and exists around the world, although the prevalence and severity varies in different populations.",
-         "In western industry countries there was a sharp increase in disease activity in the first half of the twentieth century, because industry countries had diet with a higher content of refined carbohydrates than less-developed countries.",
-         "During the 1970s and 1980s the prevalence of dental caries in children fell steadily, particularly following the widespread use of fluoride-containing toothpastes and greater access to dental care.",
-         "Despite the encouraging and sustained reduction in dental caries in industrialized countries, the prevalence is increasing in certain developing countries and is associated with urbanization and the increased availability of refined carbohydrates."
+         "The dental pulp is a delicate connective tissue, containing tiny blood vessels, lymphatic, myelinated, unmyelinated nerves, and undifferentiated mesenchymal cells like other connective tissues throughout the body; it reacts to noxious stimuli by an inflammatory response.",
+         "This response is not significantly different from that seen in other tissues, the final result can be different because of certain peculiar (anatomical) features of the pulp which includes :-",
+         "1-the pulp is enclosed within the calcified walls of the dentin, which precludes the excessive swelling of the tissue that occurs in hyperemic and edematous phases of inflammation in other tissues.",
+         "2-the blood vessels supplying the pulp tissues must enter the tooth through a tiny apical foramen, this precludes the development of an extensive collateral blood supply to the inflamed part."
      ]},
 
-    {"title": "Theories of Dental Caries",
+    {"title": "Causes of Pulpitis",
      "content": [
-         "1- Acidogenic theory (chemo parasitic theory): Proposes that acid formed from fermentation of dietary carbohydrates by oral bacteria leads to progressive decalcification of tooth substance (inorganic) with subsequent disintegration of the organic matrix.",
-         "Evidence: Experimental studies by Orland and his workers in 1954 showed that germ-free oral hygiene animals did not develop dental caries even with sugar administration.",
-         "2- Proteolytic theory: Suggests microorganisms attack the organic part of enamel, leaving acid to further decalcify the inorganic part.",
-         "Objection: Out of 0.56% organic matrix, 0.18% is keratin, and no enzyme systems capable of attacking keratin have been isolated.",
-         "3- Proteolysis-chelating theory (Schatz et al 1955): Products of proteolysis act as chelating agents to remove calcium ions from tooth by forming complexes, possibly at neutral pH.",
-         "Objection: Saliva and plaque do not contain sufficient concentrations to chelate calcium from enamel; chelators more likely bind calcium from saliva.",
-         "4- Sucrose-chelating theory (Eggers-Lura 1948): Sucrose acts as a chelating agent forming calcium saccharide, removing calcium from enamel.",
-         "Objection: Sucrose is rapidly metabolized to acid and polysaccharides, not present long enough to form chelate."
+         "1- Bacterial-caries in crown, periodontal pockets.",
+         "2- Traumatic-crown fractures, root fractures, partial avulsion, bruxism, abrasion.",
+         "3- Iatrogenic - Chemical -Thermal.",
+         "Heat generation, depth of preparation, dehydration of tubules, pulp exposure, and volatile/toxic disinfectant filling materials.",
+         "Of these causes, the bacterial effects are the most important.",
+         "Bacteria can damage the pulp through toxins or directly after extension from caries or transportation via the vasculature ((this is a debatable issue))"
+     ]},
+
+    {"title": "Barotrauma (aerodontalgia)",
+     "content": [
+         "Dental pain has been described by air crew flying at high altitudes in unpressurized aircraft.",
+         "And in divers subjected to too rapid decompression following deep sea diving.",
+         "This pain has been attributed to the formation of nitrogen bubbles in the pulp tissues or vessels, similar to the decompression syndrome elsewhere in the body, however, gas bubbles are seldom found in decompressed organs and the possibility of fat emboli from altered lipoproteins and platelet thrombi around the fat is suggested by some investigators.",
+         "Aerodontalgia is really a marker of inadequate pulp protection from the atmosphere and this usually means caries.",
+         "It is not a direct cause of pulpitis, rather an exacerbating factor."
      ]}
 ]
 slides += [
-    {"title": "Aetiology of Dental Caries",
+    {"title": "Pulpitis Classification",
      "content": [
-         "Dental caries is multifactorial.",
-         "It involves the interaction of an acidogenic microflora on a susceptible tooth surface in a conductive environment and with frequent intake of food containing retentive and rapidly fermentable carbohydrates.",
-         "Major (absolutely major) factors:",
-         "1- Host factor (tooth and saliva).",
-         "2- Cariogenic diet (carbohydrate).",
-         "3- Plaques and its microorganism.",
-         "4- Time.",
-         "Minor factors (increase the risk of caries occurrence):",
-         "1- Heredity.",
-         "2- Socioeconomic status."
+         "Pulpitis can be classified as",
+         "· Acute or chronic",
+         "· Subtotal or generalized",
+         "· Infected or sterile",
+         "The best classification system is one that guides the appropriate treatment ((1 of the 3 choices))",
+         "Reversible pulpitis denotes a level of pulpal inflammation in which the tissue is capable of returning to a normal state of health if the noxious stimuli are removed.",
+         "Irreversible pulpitis implies that a higher level of inflammation has developed in which the dental pulp has been damaged beyond the point of recovery"
      ]},
 
-    {"title": "Host Factor",
+    {"title": "Pulpal Inflammation Mechanism",
      "content": [
-         "1- Teeth:",
-         "a- Morphology: deep pits and fissures increase caries risk; shallow grooves reduce it.",
-         "b- Position and arch form: malalignment/overlapping creates plaque stagnation zones.",
-         "c- Fluoride content: enhances re-mineralization and prevents caries.",
-         "d- Size: smaller teeth are less likely to develop caries due to reduced surface area.",
-         "e- Genetics: may influence susceptibility.",
-         "f- Age: caries susceptibility decreases with age due to posteruptive maturation.",
-         "2- Saliva:",
-         "a- Composition:",
-         "- Protein: reduced levels → increased caries risk.",
-         "- Lysozyme, peroxidase, IgA → antibacterial and anticariogenic.",
-         "- Amylase: cariogenic by promoting starch breakdown.",
-         "b- Flow rate: reduced flow (e.g. xerostomia) increases risk.",
-         "c- pH: lower pH promotes caries.",
-         "d- Viscosity: higher viscosity associated with increased caries."
+         "When external stimuli reach a noxious level, degranulation of mast cells, decreased nutrient flow and cellular damage occur.",
+         "Numerous inflammatory mediators (histamine, bradykinin, and prostaglandins) are released.",
+         "These mediators cause vasodilation, increased blood flow, and vascular leakage with edema.",
+         "Normally this should promote healing through removal of inflammatory mediators.",
+         "However, the dental pulp exists in a very confined area.",
+         "If the inflammatory process continued for an extended period of time can lead to increased pulp injury or even death of the pulp.",
+         "Previous studies suggested that the associated increased vascular pulpal pressures could compress venous return and lead to (self-strangulation) and pulp necrosis.",
+         "Recent studies recognize that the increased fluid pressure usually is localized to the area of inflamed pulp immediately adjacent to the affected dentin, increased interstitial pressure in area of inflammation leads to increased flow of fluid back into capillaries of adjacent uninflammed tissue and increased drainage.",
+         "In this manner, the increased fluid pressure from inflammation is counteracted and typically does not lead to generalized increase in pulp fluid pressure, effectively preventing (self-strangulation).",
+         "According to the above mentioned explanation of the pulp response to injury, it seems that the pulp defense mechanisms may work well with many mild-moderate injuries and rarely result in widespread necrosis.",
+         "Localized pulp abscesses may heal after eliminating the injury and formation of reparative dentin, however sever localized pulpal damage can overwhelm the system, leading to pulp necrosis."
      ]},
 
-    {"title": "Cariogenic Diet (Carbohydrates)",
+    {"title": "1-Reversible Pulpitis (focal reversible pulpitis)",
      "content": [
-         "· Physical nature: solid/sticky carbs are more cariogenic than liquid/semisolid.",
-         "· Chemical nature: simpler carbs (mono-, disaccharides) ferment faster than polysaccharides.",
-         "· Route of administration: only oral intake causes caries — blood sugar levels are irrelevant.",
-         "· Use of straw: reduces plaque/saliva pH drop.",
-         "· Oral clearance: faster clearance reduces risk.",
-         "· Frequency: frequent intake increases risk.",
-         "· Presence of other foodstuffs: protective components include:",
-         "- Fluoride",
-         "- Fatty acids: inhibit carb metabolism, increase clearance, and act as physical barrier.",
-         "- Tea: inhibits amylase, providing protection."
+         "This denotes that the pulp is capable of full recovery if the irritating factors subside or removed.",
+         "The symptoms reflect an irritated pulp tissue that reacts with the mildest and earliest forms of the inflammatory response, consisting of vasodilation, transudation, a slight infiltrate of acute inflammatory cells underlying the area of affected dentinal tubules.",
+         "Tertiary dentin may be noted in the adjacent wall.",
+         "On clinical examination the pain is mild-moderate in intensity and responds to sudden change in temperature.",
+         "The pain generally remains for 5-10 minutes and seldom lasts longer than 20 minutes.",
+         "The tooth remains symptomless until it is stimulated again.",
+         "Changing body positions do not affect the pattern of pain, or duration of pain.",
+         "The pain is mostly provoked by cold, although hot, sweet, or sour food may also cause pain.",
+         "The tooth responds to electric pulp testing at lower levels of current than normal tooth.",
+         "Percussion and mobility tests are negative.",
+         "If the tooth is treated, the condition is reversible and the pulp will heal, if pulpitis is allowed to progress, then irreversible pulp damage will occur."
      ]},
 
-    {"title": "Plaque and Cariogenic Flora",
+    {"title": "2-Irreversible Pulpitis",
      "content": [
-         "Plaque: soft, unmineralized bacterial deposit (biofilm) on teeth and prostheses.",
-         "Resists salivary washing and tongue movement but removable by brushing.",
-         "Plaque contributes to caries initiation but does not guarantee it.",
-         "Formation stages:",
-         "1- Pellicle formation: acellular protein film from saliva.",
-         "2- 0–4 hrs: single bacterial cells (mostly streptococci — S. sanguis, S. oralis, S. mitis).",
-         "Mutans streptococci ≈ 2% — key initiators of caries.",
-         "3- 4–24 hrs: bacterial colonies grow and form microcolonies.",
-         "4- 1–14 days: Streptococcus-dominant plaque shifts to Actinomyces-dominant — microbial succession.",
-         "5- 2 weeks: Plaque matures, varies by site — explains uneven lesion progression."
+         "The patient with early irreversible pulpitis presented with sharp, sever pain on thermal stimulation, and the pain continues after removal of the stimulus.",
+         "Cold is the most uncomfortable, although heat or sweet and acidic food can cause pain.",
+         "The pain may be spontaneous or continuous and may be exacerbated when the patient lies down.",
+         "The tooth responds to electric pulp testing at lower levels of current.",
+         "At this stage (early), the pain often can be localized easily to the individual affected tooth.",
+         "With time the patient discomfort is increasing and can no more be able to identify the offending tooth",
+         "In the later stages of irreversible pulpitis, the Pain increases in intensity and experienced as throbbing, which keeps the patient awake at night.",
+         "At this point heat increases the pain, while cold may produce relief.",
+         "The tooth responds to electric pulp testing at higher levels of current or demonstrates no response.",
+         "Mobility and sensitivity to percussion are negative."
      ]},
 
-    {"title": "Pathologic Properties of Cariogenic Bacteria",
+    {"title": "Histopathological Features of Irreversible Pulpitis",
      "content": [
-         "1- Ferment carbohydrates to produce acid.",
-         "2- Remain viable at low pH.",
-         "3- Numbers correlate with caries activity.",
-         "4- Regularly found in active lesions.",
-         "5- Produce extracellular polysaccharides (glucans, fructans) and intracellular polysaccharides for energy production when sugars aren't available."
-     ]},
-
-    {"title": "Clinical Classification of Dental Caries",
-     "content": [
-         "* According to rate of attack:",
-         "1. Active carious lesion.",
-         "2. Inactive carious lesion.",
-         "* According to restoration history:",
-         "1. Primary (virgin) caries.",
-         "2. Secondary (recurrent) caries.",
-         "* According to site of attack:",
-         "1. Pit and fissure caries.",
-         "2. Smooth surface caries.",
-         "3. Cemental or root caries."
+         "Irreversible pulpitis often demonstrates congestion of the venules that results in focal necrosis.",
+         "This necrotic zone contains polymorphonuclear leukocytes and histiocytes.",
+         "The surrounding pulp exhibits fibrosis and a mixture of plasma cells, lymphocytes and histeocytes."
      ]}
 ]
 slides += [
-    {"title": "Types of Dental Caries According to Rate of Attack",
+    {"title": "3-Chronic Hyperplastic Pulpitis",
      "content": [
-         "1- Rampant or acute caries.",
-         "2- Slow progressive or chronic caries.",
-         "3- Arrested caries."
+         "This is a unique pattern of pulpal inflammation, it occurs in children and young adults who have large exposures of the pulp in which the entire dentinal roof often is missing.",
+         "The most frequently involved teeth are the deciduous or permanent molars, which have large pulp chambers in these age groups.",
+         "Mechanical irritation and bacterial result in a level of chronic inflammation that produces hyperplastic granulation tissue that extrudes from pulp chamber and often fills the associated dentinal defect.",
+         "The apex may be open and reduces the chance of pulp necrosis secondary to venous compression.",
+         "The tooth is asymptomatic except for a feeling of pressure on mastication."
      ]},
 
-    {"title": "Acute Dental Caries",
+    {"title": "Histopathological Features of Chronic Hyperplastic Pulpitis",
      "content": [
-         "Follows a rapid clinical course with early pulpal involvement.",
-         "Affects children and young adults due to larger dentinal tubules without sclerosis.",
-         "Small point of entry with rapid spread at DEJ, forming large internal cavitation.",
-         "Saliva's buffering ions can't reach internal cavity due to small opening.",
-         "Affected dentin stained light yellow (vs deep brown/black in chronic caries).",
-         "Pain is more likely in acute caries."
+         "This demonstrates a cap of subacutely inflamed granulation tissue that fills the entire space of the original pulp chamber.",
+         "The surface of the polyp may or may not be covered with stratified squamous epithelium, which migrates from the adjacent gingiva or arise from sloughed epithelium within the oral fluids.",
+         "The deeper pulp tissue within the canals typically demonstrates fibrosis and chronic inflammation."
      ]},
 
-    {"title": "Rampant Dental Caries",
+    {"title": "The Process of Irreversible Pulpitis May Be Acute or Chronic",
      "content": [
-         "Sudden, rapid destruction of teeth including surfaces typically resistant to caries.",
-         "Defined as 10+ carious lesions over one year.",
-         "Common in children and teenagers.",
-         "Caused by high-carb diet and saliva-related physiological factors.",
-         "Includes Nursing Bottle Caries (baby bottle syndrome): caused by sleeping with bottles of milk/formula/sweetened water.",
-         "Seen in maxillary incisors first, followed by molars and canines.",
-         "Mandibular teeth often unaffected — key distinguishing feature."
+         "Acute pulpitis-this may be a progression of focal reversible pulpitis or may present as an acute exacerbation of an already established chronic pulpitis.",
+         "Pulpal damage may range in severity from simple acute inflammation marked by vessels dilatation, exudation and neutrophil chemotaxsis to focal liquefaction necrosis (pulp abscess) to total pulp suppurative necrosis."
      ]},
 
-    {"title": "Chronic Caries",
+    {"title": "Chronic Pulpitis",
      "content": [
-         "Ordinary caries that develops slowly.",
-         "Becomes fully destructive in older ages — requires time."
+         "This is an inflammatory reaction that results from long term low grade injury or occasionally from quiescence of an acute process.",
+         "Symptoms, characteristically mild and often intermittent, appear over an extended period.",
+         "A dull pain may be the presenting complaint, or the patient may have no symptoms.",
+         "As the pulp becomes necrotic, responses to thermal and electric stimuli are reduced."
      ]},
 
-    {"title": "Arrested Caries",
+    {"title": "Histopathological Features",
      "content": [
-         "Remineralization of dentin halts progression.",
-         "Fluoride in saliva is key factor.",
-         "Occurs in self-cleansing areas or after tooth extraction exposing proximal surface.",
-         "Enamel may be fractured, exposing dentin to remineralization."
-     ]},
-
-    {"title": "Histopathology of Caries – Enamel",
-     "content": [
-         "1- Enamel is 96% inorganic, 4% organic + water.",
-         "2- Structure: enamel rods (body & tail), rod sheath, interprismatic substance.",
-         "3- Crystals of hydroxyapatite tightly packed with intercrystalline pores filled with water + organic material.",
-         "4- Acid exposure leads to mineral loss → crystals shrink → pores enlarge → surface becomes porous.",
-         "This is called a 'white spot lesion', detectable clinically."
-     ]},
-
-    {"title": "Histopathology of Caries – Dentin",
-     "content": [
-         "1- Vital tissue with tubules containing odontoblast processes.",
-         "2- Defends via tubular sclerosis (mineral deposition occludes tubules).",
-         "3- Forms tertiary dentin at pulp-dentin border in response to stimulus — reduces permeability."
-     ]},
-
-    {"title": "White Spot Lesion – Smooth Surface",
-     "content": [
-         "Seen as opaque white area on dried tooth (sometimes brown from stains).",
-         "Cone shaped lesion: apex toward DEJ due to enamel prism direction.",
-         "Four zones:",
-         "Zone I: Translucent Zone – magnesium/carbonate dissolved, porous, at advancing front.",
-         "Zone II: Dark Zone – remineralized area, superficial to translucent zone.",
-         "Zone III: Body of Lesion – greatest demineralization, high porosity.",
-         "Zone IV: Surface Zone – intact, more mineralized than subsurface enamel.",
-         "Progression leads to destruction of surface zone → cavity formation."
-     ]},
-
-    {"title": "Histopathogenesis of Early Lesion",
-     "content": [
-         "1- Surface translucent zone develops, not detectable clinically/radiographically.",
-         "2- Subsurface translucent zone enlarges; dark zone develops centrally.",
-         "3- More mineral loss → center becomes lesion body; recognizable as white spot.",
-         "4- Stains from food/tobacco → brown spot.",
-         "5- Caries reaches amelodentinal junction → lateral spread → enamel undermined.",
-         "6- Surface breakdown → cavity formation (may precede lateral spread).",
-         "Lesion may involve dentin late in stage 3 or not until stage 5/6.",
-         "Bitewing radiographs show lesions from stage 4 onwards."
-     ]},
-
-    {"title": "Pit and Fissure Caries (Occlusal)",
-     "content": [
-         "Follows enamel rod direction: cone-shaped with apex at surface, base at DEJ.",
-         "Starts in fissure walls → coalesces → lesion enlarges toward dentin.",
-         "Outer enamel is resistant but dentin dissolves easily with lactic acid.",
-         "Cavity forms in dentin; enamel cracks → bacteria invade pulp.",
-         "Fluoride hardens minerals, preventing dissolution.",
-         "More cavitations in pits/fissures than smooth surfaces because:",
-         "1- Thin enamel at bottom of pit/fissure allows faster caries progression.",
-         "2- Enamel rods diverge → caries follows path forming cone shape.",
-         "3- Undermined enamel collapses under mastication stress → fragments → bacterial attack worsens."
+         "Lymphocytes, plasma cells and fibrosis appear in the chronically inflamed pulp.",
+         "If there is an acute exacerbation of chronic process, neutrophils will be seen."
      ]}
 ]
 slides += [
-    {"title": "Caries of Dentin",
+    {"title": "Pulp Necrosis",
      "content": [
-         "1- Dentin composed of 30% organic material and water, 70% inorganic material.",
-         "2- Dentin is composed of dentinal tubules, inside which is the odontoblastic process. Odontoblastic process is the extension of odontoblast inside the dentin, these process have lateral branches anatomizing with each other, and form a network.",
-         "3- As caries reaches the enamel-dentin junction, caries spread laterally along the junction. Sound enamel appears to be undermined by the carious process in dentin. Undermined enamel is brittle and can be fractured producing a large cavity.",
-         "4- When caries reached the dentin, there is a lateral spread of the lesion, involve more tubule which act as pathway or tract along which the microorganism will spread to the deeper areas and then to the pulp in a conical or triangular pattern with the apex toward the pulp and the base to the dentine.",
-         "5- At the first, the decalcified dentin retains its normal morphology and no bacteria can be seen.",
-         "6- Once the dentine has been reached, pioneer bacteria extend down the tubule, soon fill them and spread along any lateral branches. The tubules become distended into spindle shapes by the expanding masses of bacteria and their product, as a result, adjacent tubules which are less heavily infected become bent, later the intervening tubule walls are destroyed and collections of bacteria in adjacent tubules coalesce to form irregular liquefaction foci. These are ovoid areas of dentinal destruction and it is parallel to the direction of dentinal tubule. It is filled with necrotic debris which increases gradually in size by expansion; in some areas, bacteria also spread laterally and occasionally large bacteria-filled clefts formed at right angles to the tubules. Clinically, these clefts may allow carious dentin to be excavated easily."
+         "Pulp necrosis may follow either pulpitis or a traumatic injury to the apical blood vessels cutting off the blood supply to the pulp.",
+         "A coagulative type of necrosis is seen after ischemia; trauma and the patient usually have no symptoms.",
+         "If the necrosis follows pulpitis then breakdown of the inflammatory cells may lead to liquefactive type of necrosis which may become infected by bacteria from caries, this type is usually associated with foul odour when opened with endodontic treatment."
      ]},
 
-    {"title": "Zones of Dentin Carious Lesion",
+    {"title": "Diagnosis of Pulp Pain",
      "content": [
-         "1- Zone of fatty degeneration of protoplasmic process: effect of bacterial enzyme on the cell membrane of the organic component.",
-         "2- Zone of dentinal sclerosis (translucent zone): regarded as vital reaction of odontoblast to irritation (deposition of calcifying salts from the demineralized zone).",
-         "3- Zone of decalcification: soft dentin due to the action of bacterial enzyme.",
-         "4- Zone of bacterial invasion.",
-         "5- Zone of decomposition of dentin: cavitation (become no mineralized remain and the organic component dissolved by the bacteria)."
+         "The diagnostic procedures that are commonly used to assess the status of a symptomatic tooth and pulp are as follows.",
+         "1-history and nature of pain.",
+         "2-visual clinical examination.",
+         "3-reaction to thermal changes.",
+         "4-reaction to electric stimulation.",
+         "5-reaction to tooth percussion.",
+         "6-radiographic examination.",
+         "7-palpation of the surrounding area.",
+         "The diagnosis of pulp pain (pulpalgia) is made from a combination of all the above mentioned points.",
+         "The value of these tests is sometimes less than optimal for e.g. when the procedures demonstrate that the pulp is disease free, the results are highly reliable.",
+         "However, when a pulp appears to test positive for irreversible pulpitis, the histopathological examination may demonstrate no obvious evidence of pulp disease.",
+         "For this reason the entire test available should be used to reach a diagnosis aided by the personal judgment and experience of the dentist."
      ]},
 
-    {"title": "Protective Reaction of Dentin and Pulp",
+    {"title": "Future Improvements in Diagnostic Methods",
      "content": [
-         "Reactions mainly due to odontoblast activity; also occur with other irritants like attrition, abrasion and restorations.",
-         "1- Development of dentinal sclerosis or translucent dentin – calcification of tubules to seal and prevent bacterial invasion.",
-         "Prominent in slow caries, minimal in rapidly advancing caries.",
-         "2- Formation of reparative (tertiary) dentin – a localized tubular dentin by irritated odontoblasts.",
-         "3- Formation of secondary dentin – tubular dentin separated from primary dentin by a hyperchromatic line; continues throughout life."
+         "Future improvements in diagnostic methods such as laser Doppler flowmetry and pulse eximetry devices may help to increase accuracy."
      ]},
 
-    {"title": "Root Surface Caries (Cemental Caries)",
+    {"title": "Laser Doppler Flowmetry",
      "content": [
-         "Cementum: hard tissue covering root dentin. Composition: 45–50% inorganic, 50–55% organic material.",
-         "Types:",
-         "A- Cellular cementum: CEJ to apical third, contains cementocytes.",
-         "B- Acellular cementum: chiefly in older people with gingival recession.",
-         "Progression:",
-         "Plaque forms on cemental surfaces → microorganisms penetrate along/cross sharpies fibers → bacteria spread vertically following cementum layers → produces saucer-shaped cavity."
+         "Laser Doppler Flowmetry is an inexpensive, noninvasive method of measuring the continuous circulation of blood flow on a microscopic level.",
+         "This method of measuring the flux of red blood cells is growing in practical application.",
+         "Doppler Flowmeter (LDF) works by reading the frequency of the oscillation produced by the Doppler frequency shift of the red blood cells in a peripheral tissue and translates the frequency to an intensity oscillation."
      ]},
 
-    {"title": "Arrest of Lesions",
+    {"title": "Pulse Oximetry Technology",
      "content": [
-         "Inactive/arrested white spot: shiny surface, may be brown due to exogenous stains.",
-         "Feels like normal enamel; not detected by probe.",
-         "Histology: wide, well-developed dark zones within and at surface of lesion.",
-         "Simple measures like fluoride toothpaste and improved plaque control can arrest lesion.",
-         "Clinician responsibility: detect early lesions by cleaning & drying for visual inspection.",
-         "Arrested white spot more acid-resistant than sound enamel; considered scar tissue and shouldn't be drilled.",
-         "Dentin caries may be arrested by exposure due to enamel loss, followed by attrition and improved diet."
+         "The principle of pulse oximetry is based on the red and infrared light absorption characteristics of oxygenated and deoxygenated hemoglobin.",
+         "Oxygenated hemoglobin absorbs more infrared light and allows more red lights to pass through.",
+         "Deoxygenated (or reduced) hemoglobin absorbs more red light and allows more infrared light to pass through.",
+         "Red light is in the 600-750 nm wavelength light band.",
+         "Infrared light is in the 850-1000 nm wavelength light band."
      ]},
 
-    {"title": "Immunological Aspects of Dental Caries",
+    {"title": "Considerations When Symptoms Don't Match",
      "content": [
-         "Caries in humans associated with serum and salivary antibodies against S. mutans.",
-         "Natural immunity appears ineffective in most people.",
-         "Experimental immunization in rats and monkeys (using live/dead organisms or cell wall components) reduces caries.",
-         "Induces humoral response: IgG, IgM, IgA and cell-mediated immunity.",
-         "Effectors reach oral cavity via gingival crevice and saliva.",
-         "IgG-mediated reactions linked with protection; IgA/IgM may interfere.",
-         "IgG acts as opsonin → facilitates phagocytosis and bacterial death.",
-         "Helper T-cell activity important; cell-mediated role unclear.",
-         "Whole-cell vaccines may cross-react with host tissues.",
-         "Safer antigens: wall proteins, glucosyltransferase (GTF) — reduce plaque formation but less effective in primates than rodents."
+         "If no correlation is existed between the symptoms present and the clinical examination, then this should raise the suspicion that these symptoms may not be of pulp origin, or the tooth that is the source of pain may be difficult to identify.",
+         "Although pulpal pain never crosses the midline, it can be referred from arch to arch making pulp testing of both arches a necessity in difficult cases.",
+         "Numerous disorders have been reported to mimic pulpalgia, e.g. migraine, headache, myofacial pain and angina pectoris.",
+         "If these conditions are not considered then the results would be sequential extractions or endodontic treatment which is all not needed and inappropriate."
+     ]}
+]
+slides += [
+    {"title": "Treatment and Prognosis",
+     "content": [
+         "Reversible pulpitis --- removal and elimination of the cause, on occasion analgesics are required.",
+         "Prognosis is good if action taken early.",
+         "Pulp testing is essential periodically to ensure that irreversible damage has not occurred.",
+         "Irreversible pulpitis --- both acute, chronic, chronic hyperplastic are treated by endodontic treatment or extraction"
+     ]},
+
+    {"title": "Pulp Calcification",
+     "content": [
+         "Pulp stones (or denticles) are calcified bodies with an organic matrix and occur most frequently in the coronal pulp.",
+         "True pulp stones contain tubules (albeit scanty and irregular) and may have an outer layer of predentine and adjacent odontoblasts.",
+         "False pulp stones are composed of concentric layers of calcified material with no tubular structure.",
+         "According to their location in the pulp stones may be described as free, adherent, or interstitial when they have become surrounded by reactionary or secondary dentine.",
+         "Pulp stones increases in number and size with age and are apparently more numerous after operative procedures on the tooth, when large they may be recognized on radiographs.",
+         "They do not cause symptoms.",
+         "Although neuralgic pain has sometimes been attributed to their presence."
+     ]},
+
+    {"title": "Dystrophic Calcification",
+     "content": [
+         "Dystrophic calcifications in the pulp consist of granules of amorphous calcific material which may be scattered along collagen fibers or aggregated into larger masses.",
+         "They are most commonly found in the root canals.",
+         "Dystrophic calcifications and pulp stones may obstruct endodontic therapy.",
+         "Pulp calcification may follow traumatic injury to the apical blood vessels which are not sufficient to cause pulp necrosis.",
+         "Large quantities of irregular dentine form in the pulp chamber and root canals which become obliterated.",
+         "Pulp obliteration is also seen in dentinogenesis imperfect and dentinal dysplasia."
+     ]},
+
+    {"title": "Age Changes in the Pulp",
+     "content": [
+         "The volume of the pulp gradually decreases with the age due to the continued production of secondary dentine.",
+         "Decreased vascularity, reduction in cellularity and increase in collagen fiber content have been reported, and these changes may impair the response of the tissue to injury and its healing potential.",
+         "It is generally accepted that the prevalence of the pulp stones and diffuse calcification increase with age but the evidence for this is inconclusive."
      ]}
 ]
