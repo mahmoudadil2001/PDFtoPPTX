@@ -1,49 +1,44 @@
-import os
-import importlib.util
 import streamlit as st
-from ppt_generator import create_ppt
+import fitz  # PyMuPDF
+from PIL import Image
+from pptx import Presentation
+from pptx.util import Inches
+import os
 
-LECTURES_DIR = "lectures"
+st.title("📄➡️📊 PDF to PowerPoint Converter")
 
-def list_lecture_files():
-    # يعرض فقط ملفات .py بدون المسافات
-    return [f for f in os.listdir(LECTURES_DIR) if f.endswith(".py") and " " not in f]
+uploaded_file = st.file_uploader("ارفع ملف PDF", type="pdf")
 
-def load_lecture_module(filename):
-    path = os.path.join(LECTURES_DIR, filename)
-    module_name = filename.replace(".py", "")  # اسم مميز لكل محاضرة
-    spec = importlib.util.spec_from_file_location(module_name, path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+if uploaded_file:
+    # قراءة الملف
+    pdf_bytes = uploaded_file.read()
+    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
 
-st.set_page_config(page_title="Dental PPT Generator", page_icon="🦷")
-st.title("🦷 Dental PowerPoint Generator")
+    st.success(f"تم تحميل الملف بنجاح: {uploaded_file.name}")
+    
+    prs = Presentation()
+    blank_slide_layout = prs.slide_layouts[6]  # شريحة فارغة
 
-lectures = list_lecture_files()
+    for page_num, page in enumerate(doc, start=1):
+        pix = page.get_pixmap(dpi=150)
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
 
-if not lectures:
-    st.warning("❌ لا توجد محاضرات في مجلد 'lectures/'")
-else:
-    selected = st.selectbox("اختر المحاضرة", lectures)
+        img_path = f"page_{page_num}.png"
+        img.save(img_path)
 
-    if st.button("إنشاء PowerPoint"):
-        module = load_lecture_module(selected)
-        title = getattr(module, "title", "Lecture")
-        slides = getattr(module, "slides", [])
+        slide = prs.slides.add_slide(blank_slide_layout)
+        left = top = Inches(0)
+        slide.shapes.add_picture(img_path, left, top, width=prs.slide_width)
 
-        output_name = f"{title.replace(' ', '_')}.pptx"
+        os.remove(img_path)
 
-        st.write(f"📄 يتم الآن إنشاء PowerPoint من: `{selected}` بعنوان: `{title}`")
+    output_name = uploaded_file.name.replace(".pdf", ".pptx")
+    prs.save(output_name)
 
-        create_ppt(title, slides, output_name)
-
-        st.success(f"✅ تم إنشاء ملف PowerPoint: {output_name}")
-
-        with open(output_name, "rb") as file:
-            st.download_button(
-                label="⬇️ حمل ملف PowerPoint",
-                data=file,
-                file_name=output_name,
-                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            )
+    with open(output_name, "rb") as f:
+        st.download_button(
+            "⬇️ تحميل العرض التقديمي",
+            f,
+            file_name=output_name,
+            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
