@@ -1,47 +1,49 @@
-import streamlit as st
-import fitz  # PyMuPDF
-from PIL import Image
-from pptx import Presentation
-from pptx.util import Inches
 import os
+import importlib.util
+import streamlit as st
+from ppt_generator import create_ppt
 
-st.set_page_config(page_title="PDF to PowerPoint", page_icon="📊")
-st.title("📄➡️📊 PDF إلى PowerPoint")
+LECTURES_DIR = "lectures"
 
-uploaded_file = st.file_uploader("ارفع ملف PDF", type="pdf")
+def list_lecture_files():
+    # يعرض فقط ملفات .py بدون المسافات
+    return [f for f in os.listdir(LECTURES_DIR) if f.endswith(".py") and " " not in f]
 
-if uploaded_file:
-    # قراءة الملف كـ bytes وفتح المستند
-    pdf_bytes = uploaded_file.read()
-    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+def load_lecture_module(filename):
+    path = os.path.join(LECTURES_DIR, filename)
+    module_name = filename.replace(".py", "")  # اسم مميز لكل محاضرة
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
-    st.info(f"📄 عدد الصفحات: {len(doc)}")
+st.set_page_config(page_title="Dental PPT Generator", page_icon="🦷")
+st.title("🦷 Dental PowerPoint Generator")
 
-    prs = Presentation()
-    blank_slide_layout = prs.slide_layouts[6]  # شريحة فارغة بدون عنوان
+lectures = list_lecture_files()
 
-    with st.spinner("🚀 جاري تحويل الصفحات إلى شرائح..."):
-        for page_num, page in enumerate(doc, start=1):
-            pix = page.get_pixmap(dpi=150)
-            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+if not lectures:
+    st.warning("❌ لا توجد محاضرات في مجلد 'lectures/'")
+else:
+    selected = st.selectbox("اختر المحاضرة", lectures)
 
-            img_path = f"temp_page_{page_num}.png"
-            img.save(img_path)
+    if st.button("إنشاء PowerPoint"):
+        module = load_lecture_module(selected)
+        title = getattr(module, "title", "Lecture")
+        slides = getattr(module, "slides", [])
 
-            slide = prs.slides.add_slide(blank_slide_layout)
-            slide.shapes.add_picture(img_path, Inches(0), Inches(0), width=prs.slide_width)
+        output_name = f"{title.replace(' ', '_')}.pptx"
 
-            os.remove(img_path)  # حذف الصورة بعد إضافتها للشريحة
+        st.write(f"📄 يتم الآن إنشاء PowerPoint من: `{selected}` بعنوان: `{title}`")
 
-    output_name = uploaded_file.name.replace(".pdf", ".pptx")
-    prs.save(output_name)
+        create_ppt(title, slides, output_name)
 
-    st.success(f"✅ تم تحويل الملف إلى PowerPoint: {output_name}")
+        st.success(f"✅ تم إنشاء ملف PowerPoint: {output_name}")
 
-    with open(output_name, "rb") as f:
-        st.download_button(
-            label="⬇️ تحميل العرض التقديمي",
-            data=f,
-            file_name=output_name,
-            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-        )
+        with open(output_name, "rb") as file:
+            st.download_button(
+                label="⬇️ حمل ملف PowerPoint",
+                data=file,
+                file_name=output_name,
+                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            )
