@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متحف علي أزهر الوطني - نغولة أصلية</title>
+    <meta name="description" content="الموقع الرسمي والوحيد لأسطورة العصر علي أزهر. استمتع بأجمل اللقطات والنغولة العراقية الأصلية.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=El+Messiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor-glow"></div>
+    <div id="head-tracker"><img src="aliazhar/1 (1).jpg" alt="Ali Head"></div>
+    
+    <nav>
+        <div class="logo">النغولة الأصلية 😼</div>
+        <div class="nav-links">
+            <a href="#gallery">المعرض</a>
+            <a href="#game" id="nav-game">العبة 🎮</a>
+            <a href="#mood" id="change-mood">تغيير المود</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-content">
+            <h1 class="glitch" data-text="علي أزهر">علي أزهر</h1>
+            <p class="subtitle">أسطورة النغولة.. ملك الضحكة.. وراعي المشاكل</p>
+            <div class="badge">معتمد من وزارة الونسة ✅</div>
+        </div>
+        <div class="floating-container">
+            <!-- Images will be injected here via JS for floating effect -->
+        </div>
+    </header>
+
+    <main>
+        <section id="game" class="game-section">
+            <h2 class="section-title">إصطياد الأسطورة 🎯</h2>
+            <div class="game-container glass">
+                <div class="game-stats">
+                    <span>النقاط: <b id="score">0</b></span>
+                    <span>أعلى نتيجة: <b id="high-score">0</b></span>
+                    <span>الوقت: <b id="timer">30</b> ثانية</span>
+                </div>
+                <div id="game-board">
+                    <!-- Face will appear here -->
+                    <div id="start-screen">
+                        <button id="start-game" class="btn-primary">إبدأ اللعب!</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery-section">
+            <h2 class="section-title">معرض الفن الراقي 🖼️</h2>
+            <div class="gallery-grid">
+                <!-- Gallery items will be injected here -->
+            </div>
+        </section>
+
+        <section class="funny-fact">
+            <div class="card glass">
+                <h3>حقيقة علمية 🧬</h3>
+                <p>يقول العلماء إن رؤية وجه علي أزهر لمدة 5 ثوانٍ ترفع هرمون السعادة (والنغولة) بنسبة 500%.</p>
+            </div>
+        </section>
+
+        <section id="mood" class="interaction-zone">
+            <button id="chaos-mode" class="btn-primary">فعل وضع الهجوم 🚀</button>
+            <p id="funny-msg"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>تم التصميم بحب (ونغولة) بواسطة صديق علي أزهر الوفي</p>
+        <p>&copy; 2026 جميع الحقوق محفوظة لوزارة النغولة</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
