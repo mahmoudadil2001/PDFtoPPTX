@@ -1,82 +1,553 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متحف علي أزهر الوطني - نغولة أصلية</title>
-    <meta name="description" content="الموقع الرسمي والوحيد لأسطورة العصر علي أزهر. استمتع بأجمل اللقطات والنغولة العراقية الأصلية.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=El+Messiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ملخص المحاضرة ← PDF</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a2e;
+    --ink-light: #4a4a6a;
+    --paper: #faf9f6;
+    --accent: #c0392b;
+    --accent-2: #d97706;
+    --accent-3: #2563eb;
+    --accent-soft: #f9ece9;
+    --border: #e2ddd6;
+    --card: #ffffff;
+    --shadow: 0 4px 32px rgba(26,26,46,0.09), 0 1px 4px rgba(26,26,46,0.06);
+  }
+
+  body {
+    background:
+      radial-gradient(1200px 600px at -10% -20%, #fdf6f5 0%, transparent 60%),
+      radial-gradient(1000px 500px at 110% 10%, #eef4ff 0%, transparent 55%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Tajawal', 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px 80px;
+  }
+
+  /* ── Header ── */
+  header { text-align: center; margin-bottom: 40px; max-width: 720px; }
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent) 0%, #a93226 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 18px rgba(192,57,43,.28);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.12;
+    color: var(--ink);
+    letter-spacing: -.01em;
+  }
+  header h1 span {
+    background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header p {
+    margin-top: 12px;
+    color: var(--ink-light);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-inline: auto;
+  }
+
+  /* ── Steps ── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    max-width: 820px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    box-shadow: 0 2px 10px rgba(26,26,46,.04);
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .step:nth-child(2) .step-num { background: var(--accent-2); }
+  .step:nth-child(3) .step-num { background: var(--accent-3); }
+  .step-text strong { display: block; font-size: 13px; color: var(--ink); margin-bottom: 2px; }
+  .step-text span  { font-size: 12.5px; color: var(--ink-light); line-height: 1.45; }
+
+  @media (max-width: 700px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 820px;
+    padding: 32px 36px 28px;
+  }
+
+  .card label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 12px;
+  }
+  .card label .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  textarea {
+    width: 100%;
+    height: 380px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: #fbfbfa;
+    resize: vertical;
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    tab-size: 2;
+  }
+  textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(192,57,43,.08);
+  }
+
+  /* ── Toolbar ── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .toolbar-hint {
+    font-size: 13px;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .toolbar-hint code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  .btn-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent) 0%, #a93226 100%);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 28px;
+    cursor: pointer;
+    transition: transform .12s, box-shadow .18s, filter .18s;
+    box-shadow: 0 6px 18px rgba(192,57,43,.28);
+  }
+  .btn-pdf:hover { box-shadow: 0 8px 24px rgba(192,57,43,.38); transform: translateY(-1px); filter: brightness(1.04); }
+  .btn-pdf:active { transform: translateY(0); }
+  .btn-pdf:disabled { opacity: .7; cursor: wait; }
+
+  /* ── Prompt box ── */
+  .prompt-section {
+    width: 100%;
+    max-width: 820px;
+    margin-top: 32px;
+  }
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .prompt-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .prompt-header h2::before {
+    content: '';
+    width: 6px; height: 22px; border-radius: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  }
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--ink-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .prompt-box {
+    background: #1a1a2e;
+    color: #f0f0f5;
+    border-radius: 12px;
+    padding: 22px 26px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    box-shadow: 0 8px 28px rgba(26,26,46,.18);
+    border: 1px solid #2c2c4a;
+  }
+  .prompt-box .pk { color: #ffb4a8; }      /* keys / labels */
+  .prompt-box .pc { color: #8ad6ff; }      /* code-ish */
+  .prompt-box .pv { color: #c5f7c5; }      /* strings */
+  .prompt-box .pm { color: #d97706; font-weight: 600; }  /* must */
+  .prompt-box .pcomm { color: #888; font-style: italic; }
+
+  /* ── Hidden PDF render area (off-screen but fully rendered) ── */
+  #pdf-render {
+    position: absolute;
+    left: -10000px;
+    top: 0;
+    width: 794px;
+    background: #fff;
+    padding: 0;
+  }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: #1a1a2e;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 30px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.25);
+    transition: transform .3s ease, opacity .3s ease;
+    opacity: 0;
+    z-index: 1000;
+    pointer-events: none;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .toast.error { background: #c0392b; }
+</style>
 </head>
 <body>
-    <div class="cursor-glow"></div>
-    <div id="head-tracker"><img src="aliazhar/1 (1).jpg" alt="Ali Head"></div>
-    
-    <nav>
-        <div class="logo">النغولة الأصلية 😼</div>
-        <div class="nav-links">
-            <a href="#gallery">المعرض</a>
-            <a href="#game" id="nav-game">العبة 🎮</a>
-            <a href="#mood" id="change-mood">تغيير المود</a>
-        </div>
-    </nav>
 
-    <header>
-        <div class="hero-content">
-            <h1 class="glitch" data-text="علي أزهر">علي أزهر</h1>
-            <p class="subtitle">أسطورة النغولة.. ملك الضحكة.. وراعي المشاكل</p>
-            <div class="badge">معتمد من وزارة الونسة ✅</div>
-        </div>
-        <div class="floating-container">
-            <!-- Images will be injected here via JS for floating effect -->
-        </div>
-    </header>
+<header>
+  <div class="logo-badge">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.25 6.75L9.25 10.5L6 8.5L2.75 10.5L3.75 6.75L1 4.5H4.5L6 1Z" fill="white"/></svg>
+    أداة المحاضرات
+  </div>
+  <h1>ملخص المحاضرة <span>← PDF</span></h1>
+  <p>أرسل أي محاضرة إلى الذكاء الاصطناعي مع البرومبت أدناه، الصق ملخص JavaScript الذي يعيده، وحمّل ملف PDF مصمم بشكل أنيق بنقرة واحدة.</p>
+</header>
 
-    <main>
-        <section id="game" class="game-section">
-            <h2 class="section-title">إصطياد الأسطورة 🎯</h2>
-            <div class="game-container glass">
-                <div class="game-stats">
-                    <span>النقاط: <b id="score">0</b></span>
-                    <span>أعلى نتيجة: <b id="high-score">0</b></span>
-                    <span>الوقت: <b id="timer">30</b> ثانية</span>
-                </div>
-                <div id="game-board">
-                    <!-- Face will appear here -->
-                    <div id="start-screen">
-                        <button id="start-game" class="btn-primary">إبدأ اللعب!</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- Steps -->
+<div class="steps">
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text"><strong>انسخ البرومبت</strong><span>أرسل البرومبت مع ملف محاضرتك إلى أي ذكاء اصطناعي.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text"><strong>الصق كود JS</strong><span>سيرد الذكاء الاصطناعي بكائن JS منظّم. الصقه في الأسفل.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text"><strong>أنشئ ملف PDF</strong><span>اضغط الزر — وسيتم تحميل ملف PDF المصمم فوراً.</span></div>
+  </div>
+</div>
 
-        <section id="gallery" class="gallery-section">
-            <h2 class="section-title">معرض الفن الراقي 🖼️</h2>
-            <div class="gallery-grid">
-                <!-- Gallery items will be injected here -->
-            </div>
-        </section>
+<div class="card">
+  <label for="summary-input"><span class="dot"></span> الصق ملخص JavaScript الذي حصلت عليه من الذكاء الاصطناعي هنا</label>
+  <textarea id="summary-input" spellcheck="false" dir="ltr" placeholder="const lectureSummary = { ... };">const lectureSummary = {
+  title: "Introduction to Neural Networks",
+  subtitle: "Foundations of Deep Learning",
+  course: "CS 4780 · Lecture 04",
+  author: "Prof. A. Turing",
+  sections: [
+    { type: "heading", text: "What is a Neural Network?" },
+    { type: "paragraph", text: "A **neural network** is a computational model inspired by the structure of the human brain. It consists of layers of interconnected nodes (*neurons*) that process information through weighted connections." },
 
-        <section class="funny-fact">
-            <div class="card glass">
-                <h3>حقيقة علمية 🧬</h3>
-                <p>يقول العلماء إن رؤية وجه علي أزهر لمدة 5 ثوانٍ ترفع هرمون السعادة (والنغولة) بنسبة 500%.</p>
-            </div>
-        </section>
+    { type: "definition", term: "Neuron", definition: "A computational unit that applies a weighted sum to its inputs followed by a non-linear activation function." },
 
-        <section id="mood" class="interaction-zone">
-            <button id="chaos-mode" class="btn-primary">فعل وضع الهجوم 🚀</button>
-            <p id="funny-msg"></p>
-        </section>
-    </main>
+    { type: "subheading", text: "Key Components" },
+    { type: "list", items: [
+      "**Input Layer** — receives raw data (pixels, tokens, signals)",
+      "**Hidden Layers** — perform intermediate transformations",
+      "**Output Layer** — produces the final prediction or class scores"
+    ]},
 
-    <footer>
-        <p>تم التصميم بحب (ونغولة) بواسطة صديق علي أزهر الوفي</p>
-        <p>&copy; 2026 جميع الحقوق محفوظة لوزارة النغولة</p>
-    </footer>
+    { type: "callout", variant: "info", title: "Why depth matters",
+      text: "Stacking more hidden layers lets a network represent increasingly *abstract* features — edges → shapes → objects." },
 
-    <script src="script.js"></script>
+    { type: "heading", text: "How Learning Works" },
+    { type: "list", style: "numbered", items: [
+      "Forward pass: data flows from input to output",
+      "Loss is computed via a **cost function** (e.g., cross-entropy)",
+      "Backpropagation computes gradients with the chain rule",
+      "Weights update using **gradient descent**"
+    ]},
+
+    { type: "formula", label: "Weight Update Rule", expression: "w_new = w_old - η · ∂L/∂w" },
+
+    { type: "subheading", text: "Activation Functions" },
+    { type: "table",
+      headers: ["Function", "Formula", "Use Case"],
+      rows: [
+        ["ReLU",    "max(0, x)",   "Hidden layers (default)"],
+        ["Sigmoid", "1 / (1+e^-x)", "Binary classification"],
+        ["Softmax", "eˣᵢ / Σeˣⱼ",  "Multi-class output"]
+      ]
+    },
+
+    { type: "heading", text: "Code Example" },
+    { type: "code", language: "python", code:
+`import numpy as np
+
+def relu(x):
+    return np.maximum(0, x)
+
+# Single neuron forward pass
+weights = np.array([0.5, -0.3, 0.8])
+inputs  = np.array([1.0, 2.0, 0.5])
+bias    = 0.1
+
+output = relu(np.dot(weights, inputs) + bias)
+print(f"Neuron output: {output:.4f}")`
+    },
+
+    { type: "callout", variant: "warning", title: "Watch out for overfitting",
+      text: "More layers = more capacity, but also more risk of memorising the training set. Use regularisation (*dropout*, *L2*) and a validation set." },
+
+    { type: "quote",
+      text: "A neural network is a universal function approximator — given enough neurons, it can represent any continuous function.",
+      author: "Universal Approximation Theorem" },
+
+    { type: "takeaways", items: [
+      "Neural networks learn by **minimising a loss function**",
+      "Depth increases representational power but also overfitting risk",
+      "Always monitor a **validation set** during training",
+      "Use regularisation: dropout, L2, early stopping",
+      "ReLU is the safe default activation for hidden layers"
+    ]}
+  ]
+};</textarea>
+
+  <div class="toolbar">
+    <div class="toolbar-hint">
+      أنواع الأقسام المدعومة: <code>heading</code> <code>list</code> <code>code</code> <code>table</code> <code>callout</code> <code>quote</code> <code>takeaways</code>
+    </div>
+    <button class="btn-pdf" id="generate-btn">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v9m0 0L6 8m3 3l3-3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 13v1.5A1.5 1.5 0 004.5 16h9a1.5 1.5 0 001.5-1.5V13" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+      إنشاء PDF
+    </button>
+  </div>
+</div>
+
+<!-- Prompt Section -->
+<div class="prompt-section">
+  <div class="prompt-header">
+    <h2>برومبت الذكاء الاصطناعي — انسخه وأرسله مع محاضرتك</h2>
+    <button class="copy-btn" id="copy-prompt-btn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 10V2.5A.5.5 0 012.5 2H10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      نسخ البرومبت
+    </button>
+  </div>
+  <div class="prompt-box" id="ai-prompt" dir="ltr"><span class="pcomm"></span>
+<span class="pcomm"></span>
+
+You are an <span class="pm">expert academic note-taker</span> producing a complete, in-depth
+<span class="pm">lecture study guide</span> — NOT a short summary, NOT bullet highlights.
+Summarize the lecture/content I provide into a single JavaScript object
+literal named <span class="pm">lectureSummary</span> using the exact schema below.
+<span class="pm">Reply with ONLY the JS code</span> (no explanations, no markdown fences).
+The summary must be written in <span class="pm">English</span>.
+
+<span class="pk">DEPTH &amp; QUALITY REQUIREMENTS — STRICT:</span>
+1. The output must be <span class="pm">long, exhaustive and thorough</span> — treat it as a
+   chapter of a textbook, not a slide deck.
+2. <span class="pm">Minimum 8 chapters</span> (heading sections), each with multiple
+   subheadings, paragraphs, and at least one supporting block (list,
+   table, definition, callout, formula, code, or quote).
+3. Each <span class="pk">paragraph</span> must be <span class="pm">3–6 full sentences</span> — no one-liners.
+   Explain the *why* and *how*, not just the *what*. Include reasoning,
+   mechanism, examples, and clinical/practical relevance when applicable.
+4. Define <span class="pm">every</span> technical term the lecture introduces using a
+   <span class="pk">definition</span> section. Aim for <span class="pm">≥ 6 definitions</span> total.
+5. Add <span class="pm">≥ 4 callouts</span> (mix variants: clinical pearls → <span class="pv">"tip"</span>,
+   common mistakes → <span class="pv">"warning"</span>, key facts → <span class="pv">"important"</span>,
+   background → <span class="pv">"note"</span>, supplementary info → <span class="pv">"info"</span>).
+6. Use <span class="pk">tables</span> for any classification, comparison, or differential.
+7. Use numbered <span class="pk">list</span> for procedures/sequences; bullet list for traits.
+8. Include real <span class="pk">quote</span>s, mnemonics, or memorable statements when present.
+9. Include any <span class="pk">formula</span>s or equations exactly as written.
+10. Finish with a <span class="pk">takeaways</span> section of <span class="pm">5–8 substantive points</span>
+    (each a complete sentence — no fragments).
+11. Do <span class="pm">NOT</span> omit material to be brief. <span class="pm">Cover everything</span> in the source.
+
+<span class="pk">SCHEMA:</span>
+const lectureSummary = {
+  <span class="pk">title</span>:    <span class="pv">"Main topic title"</span>,
+  <span class="pk">subtitle</span>: <span class="pv">"Short tagline / scope of the lecture"</span>,
+  <span class="pk">course</span>:   <span class="pv">"Course / lecture identifier (optional)"</span>,
+  <span class="pk">author</span>:   <span class="pv">"Lecturer name (optional)"</span>,
+  <span class="pk">sections</span>: [
+    { <span class="pk">type</span>: <span class="pv">"heading"</span>,    <span class="pk">text</span>: <span class="pv">"Chapter title"</span> },
+    { <span class="pk">type</span>: <span class="pv">"subheading"</span>, <span class="pk">text</span>: <span class="pv">"Sub-section title"</span> },
+    { <span class="pk">type</span>: <span class="pv">"paragraph"</span>,  <span class="pk">text</span>: <span class="pv">"3–6 sentence explanation. Use **bold**, *italic*, `code`."</span> },
+    { <span class="pk">type</span>: <span class="pv">"definition"</span>, <span class="pk">term</span>: <span class="pv">"Term"</span>, <span class="pk">definition</span>: <span class="pv">"Full meaning"</span> },
+    { <span class="pk">type</span>: <span class="pv">"list"</span>,       <span class="pk">items</span>: [<span class="pv">"point 1"</span>, <span class="pv">"point 2"</span>] },
+    { <span class="pk">type</span>: <span class="pv">"list"</span>,       <span class="pk">style</span>: <span class="pv">"numbered"</span>, <span class="pk">items</span>: [<span class="pv">"step 1"</span>, <span class="pv">"step 2"</span>] },
+    { <span class="pk">type</span>: <span class="pv">"callout"</span>,    <span class="pk">variant</span>: <span class="pv">"info|tip|warning|note|important"</span>,
+      <span class="pk">title</span>: <span class="pv">"Optional title"</span>, <span class="pk">text</span>: <span class="pv">"Body text."</span> },
+    { <span class="pk">type</span>: <span class="pv">"formula"</span>,    <span class="pk">label</span>: <span class="pv">"Equation name"</span>, <span class="pk">expression</span>: <span class="pv">"E = mc²"</span> },
+    { <span class="pk">type</span>: <span class="pv">"code"</span>,       <span class="pk">language</span>: <span class="pv">"python"</span>, <span class="pk">code</span>: <span class="pc">`source code here`</span> },
+    { <span class="pk">type</span>: <span class="pv">"table"</span>,      <span class="pk">headers</span>: [<span class="pv">"A"</span>,<span class="pv">"B"</span>], <span class="pk">rows</span>: [[<span class="pv">"a1"</span>,<span class="pv">"b1"</span>]] },
+    { <span class="pk">type</span>: <span class="pv">"quote"</span>,      <span class="pk">text</span>: <span class="pv">"Memorable quote"</span>, <span class="pk">author</span>: <span class="pv">"Source"</span> },
+    { <span class="pk">type</span>: <span class="pv">"divider"</span> },
+    { <span class="pk">type</span>: <span class="pv">"takeaways"</span>,  <span class="pk">items</span>: [<span class="pv">"5–8 full-sentence conclusions"</span>] }
+  ]
+};
+
+<span class="pk">FORMATTING RULES:</span>
+- Use <span class="pm">double quotes</span> for strings; backticks (` `) only for the <span class="pk">code</span> field.
+- Inside any text you may use <span class="pc">**bold**</span>, <span class="pc">*italic*</span>, <span class="pc">`inline code`</span>.
+- Output <span class="pm">only</span> the JS object — no explanations, no markdown fences, nothing else.
+- If you are tempted to be brief — <span class="pm">don't</span>. Length and depth are required.
+
+<span class="pk"></span>
+</div>
+</div>
+
+<!-- Hidden render area -->
+<div id="pdf-render"></div>
+
+<div class="toast" id="toast"></div>
+
+<!-- External PDF generator script -->
+<script src="pdf-generator.js"></script>
+
+<script>
+  const btn = document.getElementById('generate-btn');
+  const input = document.getElementById('summary-input');
+  const toastEl = document.getElementById('toast');
+
+  function showToast(msg, isError = false) {
+    toastEl.textContent = msg;
+    toastEl.classList.toggle('error', isError);
+    toastEl.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toastEl.classList.remove('show'), 3200);
+  }
+
+  const originalBtn = btn.innerHTML;
+
+  btn.addEventListener('click', async () => {
+    const code = input.value.trim();
+    if (!code) { showToast('الرجاء لصق ملخص JS أولاً', true); return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span style="display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;"></span> جارٍ الإنشاء…';
+
+    try {
+      await window.LecturePDF.generate(code, {
+        onStatus: (s) => {
+          if (s === 'parse')  showToast('جارٍ تحليل الملخص…');
+          if (s === 'render') showToast('جارٍ تصميم ملف PDF…');
+          if (s === 'export') showToast('جارٍ تصدير PDF…');
+          if (s === 'done')   showToast('تم تحميل PDF ✓');
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      showToast(e.message || 'تعذّر إنشاء PDF', true);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalBtn;
+    }
+  });
+
+  // Copy prompt
+  document.getElementById('copy-prompt-btn').addEventListener('click', () => {
+    const text = document.getElementById('ai-prompt').innerText;
+    navigator.clipboard.writeText(text)
+      .then(() => showToast('تم نسخ البرومبت ✓'))
+      .catch(() => showToast('تعذّر نسخ البرومبت', true));
+  });
+
+  // Spinner keyframes
+  const sty = document.createElement('style');
+  sty.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+  document.head.appendChild(sty);
+</script>
 </body>
 </html>
