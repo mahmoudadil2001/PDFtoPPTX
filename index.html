@@ -333,22 +333,22 @@
   <div class="prompt-box" id="ai-prompt" dir="ltr"><span class="pcomm"></span>
 <span class="pcomm"></span>
 
-You are an <span class="pm">expert summarizer</span> producing a highly detailed and comprehensive
+You are an <span class="pm">expert summarizer</span> producing a well-balanced and informative
 <span class="pm">lecture study guide</span>.
 Summarize the lecture/content I provide into a single JavaScript object
 literal named <span class="pm">lectureSummary</span> using the exact schema below.
 <span class="pm">Reply with ONLY the JS code</span> wrapped in a markdown code block (```javascript) for easy copying.
-The summary must be written in <span class="pm">English</span> and must be <span class="pm">extensive enough to fill at least 4 pages</span> when printed.
+The summary must be written in <span class="pm">English</span> and should be <span class="pm">detailed enough to thoroughly cover the material (around 2-3 pages)</span>.
 
 <span class="pk">SUMMARY REQUIREMENTS:</span>
-1. The output must be <span class="pm">highly detailed and comprehensive</span> — do not skip important details, examples, or nuances.
-2. Provide many main <span class="pm">chapters</span> (heading sections) with deeply explored subheadings.
-3. Write detailed <span class="pk">paragraphs</span> (4-7 sentences) to thoroughly explain complex concepts.
-4. Include extensive <span class="pk">definitions</span> for all technical and important terms.
-5. Add frequent <span class="pk">callouts</span> for important takeaways, tips, and notes.
-6. Use <span class="pk">lists</span> extensively to break down multi-step processes or grouped concepts.
-7. Finish with a comprehensive <span class="pk">takeaways</span> section of <span class="pm">8–10 bullet points</span>.
-8. Focus on depth, clarity, and providing a complete educational resource.
+1. The output must be <span class="pm">balanced and informative</span> — cover the main concepts and important supporting details.
+2. Provide logical <span class="pm">chapters</span> (heading sections) with clear subheadings.
+3. Write moderate <span class="pk">paragraphs</span> (2-4 sentences) to explain concepts without being overly verbose.
+4. Include clear <span class="pk">definitions</span> for key technical terms.
+5. Add a few <span class="pk">callouts</span> for crucial takeaways or tips.
+6. Use <span class="pk">lists</span> to break down processes or grouped concepts.
+7. Finish with a solid <span class="pk">takeaways</span> section of <span class="pm">5–7 bullet points</span>.
+8. Focus on providing a comprehensive yet digestible educational resource.
 
 <span class="pk">SCHEMA:</span>
 const lectureSummary = {
@@ -378,7 +378,7 @@ const lectureSummary = {
 - Use <span class="pm">double quotes</span> for strings; backticks (` `) only for the <span class="pk">code</span> field.
 - Inside any text you may use <span class="pc">**bold**</span>, <span class="pc">*italic*</span>, <span class="pc">`inline code`</span>.
 - Output <span class="pm">only</span> the JS object inside a markdown code block (```javascript ... ```) — no other conversational text.
-- Ensure the output is <span class="pm">lengthy, highly detailed, and thoroughly covers the material</span> to fill at least 4 pages.
+- Ensure the output has a <span class="pm">good balance of detail and brevity</span>, forming a solid 2-3 page summary.
 
 <span class="pk"></span>
 </div>
