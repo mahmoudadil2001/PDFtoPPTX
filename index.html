@@ -328,79 +328,7 @@
 
 <div class="card">
   <label for="summary-input"><span class="dot"></span> الصق ملخص JavaScript الذي حصلت عليه من الذكاء الاصطناعي هنا</label>
-  <textarea id="summary-input" spellcheck="false" dir="ltr" placeholder="const lectureSummary = { ... };">const lectureSummary = {
-  title: "Introduction to Neural Networks",
-  subtitle: "Foundations of Deep Learning",
-  course: "CS 4780 · Lecture 04",
-  author: "Prof. A. Turing",
-  sections: [
-    { type: "heading", text: "What is a Neural Network?" },
-    { type: "paragraph", text: "A **neural network** is a computational model inspired by the structure of the human brain. It consists of layers of interconnected nodes (*neurons*) that process information through weighted connections." },
-
-    { type: "definition", term: "Neuron", definition: "A computational unit that applies a weighted sum to its inputs followed by a non-linear activation function." },
-
-    { type: "subheading", text: "Key Components" },
-    { type: "list", items: [
-      "**Input Layer** — receives raw data (pixels, tokens, signals)",
-      "**Hidden Layers** — perform intermediate transformations",
-      "**Output Layer** — produces the final prediction or class scores"
-    ]},
-
-    { type: "callout", variant: "info", title: "Why depth matters",
-      text: "Stacking more hidden layers lets a network represent increasingly *abstract* features — edges → shapes → objects." },
-
-    { type: "heading", text: "How Learning Works" },
-    { type: "list", style: "numbered", items: [
-      "Forward pass: data flows from input to output",
-      "Loss is computed via a **cost function** (e.g., cross-entropy)",
-      "Backpropagation computes gradients with the chain rule",
-      "Weights update using **gradient descent**"
-    ]},
-
-    { type: "formula", label: "Weight Update Rule", expression: "w_new = w_old - η · ∂L/∂w" },
-
-    { type: "subheading", text: "Activation Functions" },
-    { type: "table",
-      headers: ["Function", "Formula", "Use Case"],
-      rows: [
-        ["ReLU",    "max(0, x)",   "Hidden layers (default)"],
-        ["Sigmoid", "1 / (1+e^-x)", "Binary classification"],
-        ["Softmax", "eˣᵢ / Σeˣⱼ",  "Multi-class output"]
-      ]
-    },
-
-    { type: "heading", text: "Code Example" },
-    { type: "code", language: "python", code:
-`import numpy as np
-
-def relu(x):
-    return np.maximum(0, x)
-
-# Single neuron forward pass
-weights = np.array([0.5, -0.3, 0.8])
-inputs  = np.array([1.0, 2.0, 0.5])
-bias    = 0.1
-
-output = relu(np.dot(weights, inputs) + bias)
-print(f"Neuron output: {output:.4f}")`
-    },
-
-    { type: "callout", variant: "warning", title: "Watch out for overfitting",
-      text: "More layers = more capacity, but also more risk of memorising the training set. Use regularisation (*dropout*, *L2*) and a validation set." },
-
-    { type: "quote",
-      text: "A neural network is a universal function approximator — given enough neurons, it can represent any continuous function.",
-      author: "Universal Approximation Theorem" },
-
-    { type: "takeaways", items: [
-      "Neural networks learn by **minimising a loss function**",
-      "Depth increases representational power but also overfitting risk",
-      "Always monitor a **validation set** during training",
-      "Use regularisation: dropout, L2, early stopping",
-      "ReLU is the safe default activation for hidden layers"
-    ]}
-  ]
-};</textarea>
+  <textarea id="summary-input" spellcheck="false" dir="ltr" placeholder="const lectureSummary = { ... };"></textarea>
 
   <div class="toolbar">
     <div class="toolbar-hint">
@@ -425,34 +353,22 @@ print(f"Neuron output: {output:.4f}")`
   <div class="prompt-box" id="ai-prompt" dir="ltr"><span class="pcomm"></span>
 <span class="pcomm"></span>
 
-You are an <span class="pm">expert academic note-taker</span> producing a complete, in-depth
-<span class="pm">lecture study guide</span> — NOT a short summary, NOT bullet highlights.
+You are an <span class="pm">expert summarizer</span> producing a concise, easy-to-read
+<span class="pm">lecture overview</span>.
 Summarize the lecture/content I provide into a single JavaScript object
 literal named <span class="pm">lectureSummary</span> using the exact schema below.
-<span class="pm">Reply with ONLY the JS code</span> (no explanations, no markdown fences).
+<span class="pm">Reply with ONLY the JS code</span> wrapped in a markdown code block (```javascript) for easy copying.
 The summary must be written in <span class="pm">English</span>.
 
-<span class="pk">DEPTH &amp; QUALITY REQUIREMENTS — STRICT:</span>
-1. The output must be <span class="pm">long, exhaustive and thorough</span> — treat it as a
-   chapter of a textbook, not a slide deck.
-2. <span class="pm">Minimum 8 chapters</span> (heading sections), each with multiple
-   subheadings, paragraphs, and at least one supporting block (list,
-   table, definition, callout, formula, code, or quote).
-3. Each <span class="pk">paragraph</span> must be <span class="pm">3–6 full sentences</span> — no one-liners.
-   Explain the *why* and *how*, not just the *what*. Include reasoning,
-   mechanism, examples, and clinical/practical relevance when applicable.
-4. Define <span class="pm">every</span> technical term the lecture introduces using a
-   <span class="pk">definition</span> section. Aim for <span class="pm">≥ 6 definitions</span> total.
-5. Add <span class="pm">≥ 4 callouts</span> (mix variants: clinical pearls → <span class="pv">"tip"</span>,
-   common mistakes → <span class="pv">"warning"</span>, key facts → <span class="pv">"important"</span>,
-   background → <span class="pv">"note"</span>, supplementary info → <span class="pv">"info"</span>).
-6. Use <span class="pk">tables</span> for any classification, comparison, or differential.
-7. Use numbered <span class="pk">list</span> for procedures/sequences; bullet list for traits.
-8. Include real <span class="pk">quote</span>s, mnemonics, or memorable statements when present.
-9. Include any <span class="pk">formula</span>s or equations exactly as written.
-10. Finish with a <span class="pk">takeaways</span> section of <span class="pm">5–8 substantive points</span>
-    (each a complete sentence — no fragments).
-11. Do <span class="pm">NOT</span> omit material to be brief. <span class="pm">Cover everything</span> in the source.
+<span class="pk">SUMMARY REQUIREMENTS:</span>
+1. The output must be <span class="pm">concise and straight to the point</span> — highlight only the key concepts.
+2. Provide a few main <span class="pm">chapters</span> (heading sections) with clear, brief subheadings.
+3. Keep <span class="pk">paragraphs</span> short and simple (1-3 sentences max).
+4. Include <span class="pk">definitions</span> only for the most crucial terms.
+5. Add 1-2 <span class="pk">callouts</span> for the most important takeaways.
+6. Use <span class="pk">lists</span> for easy scanning of key points.
+7. Finish with a <span class="pk">takeaways</span> section of <span class="pm">3–5 bullet points</span>.
+8. Focus on brevity and clarity.
 
 <span class="pk">SCHEMA:</span>
 const lectureSummary = {
@@ -463,8 +379,8 @@ const lectureSummary = {
   <span class="pk">sections</span>: [
     { <span class="pk">type</span>: <span class="pv">"heading"</span>,    <span class="pk">text</span>: <span class="pv">"Chapter title"</span> },
     { <span class="pk">type</span>: <span class="pv">"subheading"</span>, <span class="pk">text</span>: <span class="pv">"Sub-section title"</span> },
-    { <span class="pk">type</span>: <span class="pv">"paragraph"</span>,  <span class="pk">text</span>: <span class="pv">"3–6 sentence explanation. Use **bold**, *italic*, `code`."</span> },
-    { <span class="pk">type</span>: <span class="pv">"definition"</span>, <span class="pk">term</span>: <span class="pv">"Term"</span>, <span class="pk">definition</span>: <span class="pv">"Full meaning"</span> },
+    { <span class="pk">type</span>: <span class="pv">"paragraph"</span>,  <span class="pk">text</span>: <span class="pv">"1–3 sentence explanation. Use **bold**, *italic*, `code`."</span> },
+    { <span class="pk">type</span>: <span class="pv">"definition"</span>, <span class="pk">term</span>: <span class="pv">"Term"</span>, <span class="pk">definition</span>: <span class="pv">"Concise meaning"</span> },
     { <span class="pk">type</span>: <span class="pv">"list"</span>,       <span class="pk">items</span>: [<span class="pv">"point 1"</span>, <span class="pv">"point 2"</span>] },
     { <span class="pk">type</span>: <span class="pv">"list"</span>,       <span class="pk">style</span>: <span class="pv">"numbered"</span>, <span class="pk">items</span>: [<span class="pv">"step 1"</span>, <span class="pv">"step 2"</span>] },
     { <span class="pk">type</span>: <span class="pv">"callout"</span>,    <span class="pk">variant</span>: <span class="pv">"info|tip|warning|note|important"</span>,
@@ -474,15 +390,15 @@ const lectureSummary = {
     { <span class="pk">type</span>: <span class="pv">"table"</span>,      <span class="pk">headers</span>: [<span class="pv">"A"</span>,<span class="pv">"B"</span>], <span class="pk">rows</span>: [[<span class="pv">"a1"</span>,<span class="pv">"b1"</span>]] },
     { <span class="pk">type</span>: <span class="pv">"quote"</span>,      <span class="pk">text</span>: <span class="pv">"Memorable quote"</span>, <span class="pk">author</span>: <span class="pv">"Source"</span> },
     { <span class="pk">type</span>: <span class="pv">"divider"</span> },
-    { <span class="pk">type</span>: <span class="pv">"takeaways"</span>,  <span class="pk">items</span>: [<span class="pv">"5–8 full-sentence conclusions"</span>] }
+    { <span class="pk">type</span>: <span class="pv">"takeaways"</span>,  <span class="pk">items</span>: [<span class="pv">"3–5 concise conclusions"</span>] }
   ]
 };
 
 <span class="pk">FORMATTING RULES:</span>
 - Use <span class="pm">double quotes</span> for strings; backticks (` `) only for the <span class="pk">code</span> field.
 - Inside any text you may use <span class="pc">**bold**</span>, <span class="pc">*italic*</span>, <span class="pc">`inline code`</span>.
-- Output <span class="pm">only</span> the JS object — no explanations, no markdown fences, nothing else.
-- If you are tempted to be brief — <span class="pm">don't</span>. Length and depth are required.
+- Output <span class="pm">only</span> the JS object inside a markdown code block (```javascript ... ```) — no other conversational text.
+- Keep the summary <span class="pm">brief, engaging, and easy to read</span>.
 
 <span class="pk"></span>
 </div>
