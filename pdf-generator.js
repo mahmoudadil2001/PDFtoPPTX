@@ -23,6 +23,49 @@
     await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js");
   }
 
+  /* ── Load image to Base64 ── */
+  function loadImageAsBase64(url) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = 1240;
+          canvas.height = 1754; 
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          ctx.globalAlpha = 0.12; 
+
+          const imgRatio = img.width / img.height;
+          const canvasRatio = canvas.width / canvas.height;
+          let drawW = canvas.width;
+          let drawH = canvas.height;
+          let x = 0;
+          let y = 0;
+
+          if (imgRatio > canvasRatio) {
+             drawH = canvas.height;
+             drawW = img.width * (canvas.height / img.height);
+             x = (canvas.width - drawW) / 2;
+          } else {
+             drawW = canvas.width;
+             drawH = img.height * (canvas.width / img.width);
+             y = (canvas.height - drawH) / 2;
+          }
+
+          ctx.drawImage(img, x, y, drawW, drawH);
+          resolve(canvas.toDataURL("image/jpeg", 0.8));
+        } catch (e) {
+          resolve(null);
+        }
+      };
+      img.onerror = () => resolve(null);
+      img.src = url;
+    });
+  }
+
   /* ── Parse user JS code ── */
   function parseSummary(code) {
     code = code.replace(/^```[\s\S]*?\n/, "").replace(/\n```\s*$/, "");
@@ -135,6 +178,13 @@
     onStatus("render");
     await ensureLibs();
 
+    let bgImageData = null;
+    try {
+      bgImageData = await loadImageAsBase64("121.avif");
+    } catch (e) {
+      console.warn("Could not load background image", e);
+    }
+
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: "mm", format: "a4" });
     const pageW = doc.internal.pageSize.getWidth();
@@ -144,10 +194,20 @@
     const maxW = pageW - marginL - marginR;
     let y = 20;
 
+    function addBackground() {
+      if (bgImageData) {
+        doc.addImage(bgImageData, "JPEG", 0, 0, pageW, pageH);
+      }
+    }
+    
+    // Add background to the first page
+    addBackground();
+
     /* ── Helpers ── */
     function checkBreak(need) {
       if (y + need > pageH - 18) {
         doc.addPage();
+        addBackground();
         y = 20;
       }
     }
