@@ -1,469 +1,599 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ملخص المحاضرة ← PDF</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/**
+ * Lecture PDF Generator — jsPDF + autoTable
+ * Produces real text-based PDFs (selectable & copyable text)
+ * Exposes: window.LecturePDF.generate(code, options)
+ */
+(function () {
+  "use strict";
 
-  :root {
-    --ink: #1a1a2e;
-    --ink-light: #4a4a6a;
-    --paper: #faf9f6;
-    --accent: #c0392b;
-    --accent-2: #d97706;
-    --accent-3: #2563eb;
-    --accent-soft: #f9ece9;
-    --border: #e2ddd6;
-    --card: #ffffff;
-    --shadow: 0 4px 32px rgba(26,26,46,0.09), 0 1px 4px rgba(26,26,46,0.06);
+  /* ── CDN loader ── */
+  function loadScript(url) {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`script[src="${url}"]`)) { resolve(); return; }
+      const s = document.createElement("script");
+      s.src = url;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error("فشل تحميل مكتبة: " + url));
+      document.head.appendChild(s);
+    });
   }
 
-  body {
-    background:
-      radial-gradient(1200px 600px at -10% -20%, #fdf6f5 0%, transparent 60%),
-      radial-gradient(1000px 500px at 110% 10%, #eef4ff 0%, transparent 55%),
-      var(--paper);
-    color: var(--ink);
-    font-family: 'Tajawal', 'DM Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 48px 20px 80px;
+  async function ensureLibs() {
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js");
   }
 
-  /* ── Header ── */
-  header { text-align: center; margin-bottom: 40px; max-width: 720px; }
-  .logo-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--accent) 0%, #a93226 100%);
-    color: #fff;
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    padding: 7px 16px;
-    border-radius: 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 6px 18px rgba(192,57,43,.28);
-  }
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
-    line-height: 1.12;
-    color: var(--ink);
-    letter-spacing: -.01em;
-  }
-  header h1 span {
-    background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  header p {
-    margin-top: 12px;
-    color: var(--ink-light);
-    font-size: 15px;
-    line-height: 1.6;
-    margin-inline: auto;
-  }
+  /* ── Load image to Base64 ── */
+  function loadImageAsBase64(url) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = 1240;
+          canvas.height = 1754; 
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          ctx.globalAlpha = 0.12; 
 
-  /* ── Steps ── */
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    max-width: 820px;
-    width: 100%;
-    margin-bottom: 24px;
-  }
-  .step {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 18px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    box-shadow: 0 2px 10px rgba(26,26,46,.04);
-  }
-  .step-num {
-    flex-shrink: 0;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 13px;
-  }
-  .step:nth-child(2) .step-num { background: var(--accent-2); }
-  .step:nth-child(3) .step-num { background: var(--accent-3); }
-  .step-text strong { display: block; font-size: 13px; color: var(--ink); margin-bottom: 2px; }
-  .step-text span  { font-size: 12.5px; color: var(--ink-light); line-height: 1.45; }
+          const imgRatio = img.width / img.height;
+          const canvasRatio = canvas.width / canvas.height;
+          let drawW = canvas.width;
+          let drawH = canvas.height;
+          let x = 0;
+          let y = 0;
 
-  @media (max-width: 700px) {
-    .steps { grid-template-columns: 1fr; }
-  }
+          if (imgRatio > canvasRatio) {
+             drawH = canvas.height;
+             drawW = img.width * (canvas.height / img.height);
+             x = (canvas.width - drawW) / 2;
+          } else {
+             drawW = canvas.width;
+             drawH = img.height * (canvas.width / img.width);
+             y = (canvas.height - drawH) / 2;
+          }
 
-  /* ── Card ── */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    width: 100%;
-    max-width: 820px;
-    padding: 32px 36px 28px;
-  }
-
-  .card label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-bottom: 12px;
-  }
-  .card label .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-soft);
-  }
-
-  textarea {
-    width: 100%;
-    height: 380px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 20px;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--ink);
-    background: #fbfbfa;
-    resize: vertical;
-    transition: border-color .2s, box-shadow .2s;
-    outline: none;
-    tab-size: 2;
-  }
-  textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(192,57,43,.08);
-  }
-
-  /* ── Toolbar ── */
-  .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .toolbar-hint {
-    font-size: 13px;
-    color: var(--ink-light);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .toolbar-hint code {
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--accent-soft);
-    color: var(--accent);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-  }
-
-  .btn-pdf {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--accent) 0%, #a93226 100%);
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    border: none;
-    border-radius: 10px;
-    padding: 13px 28px;
-    cursor: pointer;
-    transition: transform .12s, box-shadow .18s, filter .18s;
-    box-shadow: 0 6px 18px rgba(192,57,43,.28);
-  }
-  .btn-pdf:hover { box-shadow: 0 8px 24px rgba(192,57,43,.38); transform: translateY(-1px); filter: brightness(1.04); }
-  .btn-pdf:active { transform: translateY(0); }
-  .btn-pdf:disabled { opacity: .7; cursor: wait; }
-
-  /* ── Prompt box ── */
-  .prompt-section {
-    width: 100%;
-    max-width: 820px;
-    margin-top: 32px;
-  }
-  .prompt-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .prompt-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: var(--ink);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .prompt-header h2::before {
-    content: '';
-    width: 6px; height: 22px; border-radius: 3px;
-    background: linear-gradient(180deg, var(--accent), var(--accent-2));
-  }
-  .copy-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 1.5px solid var(--border);
-    color: var(--ink-light);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: 8px;
-    padding: 7px 14px;
-    cursor: pointer;
-    transition: all .18s;
-  }
-  .copy-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-  .prompt-box {
-    background: #1a1a2e;
-    color: #f0f0f5;
-    border-radius: 12px;
-    padding: 22px 26px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12.5px;
-    line-height: 1.7;
-    white-space: pre-wrap;
-    overflow-x: auto;
-    box-shadow: 0 8px 28px rgba(26,26,46,.18);
-    border: 1px solid #2c2c4a;
-  }
-  .prompt-box .pk { color: #ffb4a8; }      /* keys / labels */
-  .prompt-box .pc { color: #8ad6ff; }      /* code-ish */
-  .prompt-box .pv { color: #c5f7c5; }      /* strings */
-  .prompt-box .pm { color: #d97706; font-weight: 600; }  /* must */
-  .prompt-box .pcomm { color: #888; font-style: italic; }
-
-  /* ── Hidden PDF render area (off-screen but fully rendered) ── */
-  #pdf-render {
-    position: absolute;
-    left: -10000px;
-    top: 0;
-    width: 794px;
-    background: #fff;
-    padding: 0;
-  }
-
-  /* ── Toast ── */
-  .toast {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%) translateY(60px);
-    background: #1a1a2e;
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 12px 24px;
-    border-radius: 30px;
-    box-shadow: 0 8px 30px rgba(0,0,0,.25);
-    transition: transform .3s ease, opacity .3s ease;
-    opacity: 0;
-    z-index: 1000;
-    pointer-events: none;
-    max-width: 90vw;
-    text-align: center;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-  .toast.error { background: #c0392b; }
-</style>
-</head>
-<body>
-
-<header>
-  <div class="logo-badge">
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.25 6.75L9.25 10.5L6 8.5L2.75 10.5L3.75 6.75L1 4.5H4.5L6 1Z" fill="white"/></svg>
-    أداة المحاضرات
-  </div>
-  <h1>ملخص المحاضرة <span>← PDF</span></h1>
-  <p>أرسل أي محاضرة إلى الذكاء الاصطناعي مع البرومبت أدناه، الصق ملخص JavaScript الذي يعيده، وحمّل ملف PDF مصمم بشكل أنيق بنقرة واحدة.</p>
-</header>
-
-<!-- Steps -->
-<div class="steps">
-  <div class="step">
-    <div class="step-num">1</div>
-    <div class="step-text"><strong>انسخ البرومبت</strong><span>أرسل البرومبت مع ملف محاضرتك إلى أي ذكاء اصطناعي.</span></div>
-  </div>
-  <div class="step">
-    <div class="step-num">2</div>
-    <div class="step-text"><strong>الصق كود JS</strong><span>سيرد الذكاء الاصطناعي بكائن JS منظّم. الصقه في الأسفل.</span></div>
-  </div>
-  <div class="step">
-    <div class="step-num">3</div>
-    <div class="step-text"><strong>أنشئ ملف PDF</strong><span>اضغط الزر — وسيتم تحميل ملف PDF المصمم فوراً.</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <label for="summary-input"><span class="dot"></span> الصق ملخص JavaScript الذي حصلت عليه من الذكاء الاصطناعي هنا</label>
-  <textarea id="summary-input" spellcheck="false" dir="ltr" placeholder="const lectureSummary = { ... };"></textarea>
-
-  <div class="toolbar">
-    <div class="toolbar-hint">
-      أنواع الأقسام المدعومة: <code>heading</code> <code>list</code> <code>code</code> <code>table</code> <code>callout</code> <code>quote</code> <code>takeaways</code>
-    </div>
-    <button class="btn-pdf" id="generate-btn">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v9m0 0L6 8m3 3l3-3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 13v1.5A1.5 1.5 0 004.5 16h9a1.5 1.5 0 001.5-1.5V13" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
-      إنشاء PDF
-    </button>
-  </div>
-</div>
-
-<!-- Prompt Section -->
-<div class="prompt-section">
-  <div class="prompt-header">
-    <h2>برومبت الذكاء الاصطناعي — انسخه وأرسله مع محاضرتك</h2>
-    <button class="copy-btn" id="copy-prompt-btn">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 10V2.5A.5.5 0 012.5 2H10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      نسخ البرومبت
-    </button>
-  </div>
-  <div class="prompt-box" id="ai-prompt" dir="ltr"><span class="pcomm"></span>
-<span class="pcomm"></span>
-
-You are an <span class="pm">expert summarizer</span> producing a concise, easy-to-read
-<span class="pm">lecture overview</span>.
-Summarize the lecture/content I provide into a single JavaScript object
-literal named <span class="pm">lectureSummary</span> using the exact schema below.
-<span class="pm">Reply with ONLY the JS code</span> wrapped in a markdown code block (```javascript) for easy copying.
-The summary must be written in <span class="pm">English</span>.
-
-<span class="pk">SUMMARY REQUIREMENTS:</span>
-1. The output must be <span class="pm">concise and straight to the point</span> — highlight only the key concepts.
-2. Provide a few main <span class="pm">chapters</span> (heading sections) with clear, brief subheadings.
-3. Keep <span class="pk">paragraphs</span> short and simple (1-3 sentences max).
-4. Include <span class="pk">definitions</span> only for the most crucial terms.
-5. Add 1-2 <span class="pk">callouts</span> for the most important takeaways.
-6. Use <span class="pk">lists</span> for easy scanning of key points.
-7. Finish with a <span class="pk">takeaways</span> section of <span class="pm">3–5 bullet points</span>.
-8. Focus on brevity and clarity.
-
-<span class="pk">SCHEMA:</span>
-const lectureSummary = {
-  <span class="pk">title</span>:    <span class="pv">"Main topic title"</span>,
-  <span class="pk">subtitle</span>: <span class="pv">"Short tagline / scope of the lecture"</span>,
-  <span class="pk">course</span>:   <span class="pv">"Course / lecture identifier (optional)"</span>,
-  <span class="pk">author</span>:   <span class="pv">"Lecturer name (optional)"</span>,
-  <span class="pk">sections</span>: [
-    { <span class="pk">type</span>: <span class="pv">"heading"</span>,    <span class="pk">text</span>: <span class="pv">"Chapter title"</span> },
-    { <span class="pk">type</span>: <span class="pv">"subheading"</span>, <span class="pk">text</span>: <span class="pv">"Sub-section title"</span> },
-    { <span class="pk">type</span>: <span class="pv">"paragraph"</span>,  <span class="pk">text</span>: <span class="pv">"1–3 sentence explanation. Use **bold**, *italic*, `code`."</span> },
-    { <span class="pk">type</span>: <span class="pv">"definition"</span>, <span class="pk">term</span>: <span class="pv">"Term"</span>, <span class="pk">definition</span>: <span class="pv">"Concise meaning"</span> },
-    { <span class="pk">type</span>: <span class="pv">"list"</span>,       <span class="pk">items</span>: [<span class="pv">"point 1"</span>, <span class="pv">"point 2"</span>] },
-    { <span class="pk">type</span>: <span class="pv">"list"</span>,       <span class="pk">style</span>: <span class="pv">"numbered"</span>, <span class="pk">items</span>: [<span class="pv">"step 1"</span>, <span class="pv">"step 2"</span>] },
-    { <span class="pk">type</span>: <span class="pv">"callout"</span>,    <span class="pk">variant</span>: <span class="pv">"info|tip|warning|note|important"</span>,
-      <span class="pk">title</span>: <span class="pv">"Optional title"</span>, <span class="pk">text</span>: <span class="pv">"Body text."</span> },
-    { <span class="pk">type</span>: <span class="pv">"formula"</span>,    <span class="pk">label</span>: <span class="pv">"Equation name"</span>, <span class="pk">expression</span>: <span class="pv">"E = mc²"</span> },
-    { <span class="pk">type</span>: <span class="pv">"code"</span>,       <span class="pk">language</span>: <span class="pv">"python"</span>, <span class="pk">code</span>: <span class="pc">`source code here`</span> },
-    { <span class="pk">type</span>: <span class="pv">"table"</span>,      <span class="pk">headers</span>: [<span class="pv">"A"</span>,<span class="pv">"B"</span>], <span class="pk">rows</span>: [[<span class="pv">"a1"</span>,<span class="pv">"b1"</span>]] },
-    { <span class="pk">type</span>: <span class="pv">"quote"</span>,      <span class="pk">text</span>: <span class="pv">"Memorable quote"</span>, <span class="pk">author</span>: <span class="pv">"Source"</span> },
-    { <span class="pk">type</span>: <span class="pv">"divider"</span> },
-    { <span class="pk">type</span>: <span class="pv">"takeaways"</span>,  <span class="pk">items</span>: [<span class="pv">"3–5 concise conclusions"</span>] }
-  ]
-};
-
-<span class="pk">FORMATTING RULES:</span>
-- Use <span class="pm">double quotes</span> for strings; backticks (` `) only for the <span class="pk">code</span> field.
-- Inside any text you may use <span class="pc">**bold**</span>, <span class="pc">*italic*</span>, <span class="pc">`inline code`</span>.
-- Output <span class="pm">only</span> the JS object inside a markdown code block (```javascript ... ```) — no other conversational text.
-- Keep the summary <span class="pm">brief, engaging, and easy to read</span>.
-
-<span class="pk"></span>
-</div>
-</div>
-
-<!-- Hidden render area -->
-<div id="pdf-render"></div>
-
-<div class="toast" id="toast"></div>
-
-<!-- External PDF generator script -->
-<script src="pdf-generator.js"></script>
-
-<script>
-  const btn = document.getElementById('generate-btn');
-  const input = document.getElementById('summary-input');
-  const toastEl = document.getElementById('toast');
-
-  function showToast(msg, isError = false) {
-    toastEl.textContent = msg;
-    toastEl.classList.toggle('error', isError);
-    toastEl.classList.add('show');
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => toastEl.classList.remove('show'), 3200);
-  }
-
-  const originalBtn = btn.innerHTML;
-
-  btn.addEventListener('click', async () => {
-    const code = input.value.trim();
-    if (!code) { showToast('الرجاء لصق ملخص JS أولاً', true); return; }
-
-    btn.disabled = true;
-    btn.innerHTML = '<span style="display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;"></span> جارٍ الإنشاء…';
-
-    try {
-      await window.LecturePDF.generate(code, {
-        onStatus: (s) => {
-          if (s === 'parse')  showToast('جارٍ تحليل الملخص…');
-          if (s === 'render') showToast('جارٍ تصميم ملف PDF…');
-          if (s === 'export') showToast('جارٍ تصدير PDF…');
-          if (s === 'done')   showToast('تم تحميل PDF ✓');
+          ctx.drawImage(img, x, y, drawW, drawH);
+          resolve(canvas.toDataURL("image/jpeg", 0.8));
+        } catch (e) {
+          resolve(null);
         }
-      });
+      };
+      img.onerror = () => resolve(null);
+      img.src = url;
+    });
+  }
+
+  /* ── Parse user JS code ── */
+  function parseSummary(code) {
+    code = code.replace(/^```[\s\S]*?\n/, "").replace(/\n```\s*$/, "");
+    try {
+      const fn = new Function(`
+        ${code}
+        if (typeof lectureSummary !== 'undefined') return lectureSummary;
+        throw new Error('lectureSummary object not found');
+      `);
+      return fn();
     } catch (e) {
-      console.error(e);
-      showToast(e.message || 'تعذّر إنشاء PDF', true);
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = originalBtn;
+      throw new Error("خطأ في تحليل الملخص: " + e.message);
     }
-  });
+  }
 
-  // Copy prompt
-  document.getElementById('copy-prompt-btn').addEventListener('click', () => {
-    const text = document.getElementById('ai-prompt').innerText;
-    navigator.clipboard.writeText(text)
-      .then(() => showToast('تم نسخ البرومبت ✓'))
-      .catch(() => showToast('تعذّر نسخ البرومبت', true));
-  });
+  /* ── Sanitize text: replace Unicode chars unsupported by Helvetica ── */
+  function sanitize(text) {
+    if (!text) return "";
+    return text
+      .replace(/\*\*/g, "")      // remove markdown bold **
+      .replace(/\*/g, "")        // remove markdown italic *
+      .replace(/`/g, "'")        // backticks to quotes
+      .replace(/→/g, "->")
+      .replace(/←/g, "<-")
+      .replace(/↔/g, "<->")
+      .replace(/≥/g, ">=")
+      .replace(/≤/g, "<=")
+      .replace(/≠/g, "!=")
+      .replace(/±/g, "+/-")
+      .replace(/×/g, "x")
+      .replace(/÷/g, "/")
+      .replace(/·/g, ".")
+      .replace(/•/g, "-")
+      .replace(/—/g, "--")
+      .replace(/–/g, "-")
+      .replace(/"/g, '"')
+      .replace(/"/g, '"')
+      .replace(/'/g, "'")
+      .replace(/'/g, "'")
+      .replace(/…/g, "...")
+      .replace(/∞/g, "inf")
+      .replace(/∑/g, "Sum")
+      .replace(/∂/g, "d")
+      .replace(/√/g, "sqrt")
+      .replace(/π/g, "pi")
+      .replace(/α/g, "alpha")
+      .replace(/β/g, "beta")
+      .replace(/γ/g, "gamma")
+      .replace(/δ/g, "delta")
+      .replace(/ε/g, "epsilon")
+      .replace(/η/g, "eta")
+      .replace(/θ/g, "theta")
+      .replace(/λ/g, "lambda")
+      .replace(/μ/g, "mu")
+      .replace(/σ/g, "sigma")
+      .replace(/τ/g, "tau")
+      .replace(/φ/g, "phi")
+      .replace(/ω/g, "omega")
+      .replace(/Δ/g, "Delta")
+      .replace(/Σ/g, "Sigma")
+      .replace(/Ω/g, "Omega")
+      .replace(/°/g, " deg")
+      .replace(/²/g, "^2")
+      .replace(/³/g, "^3")
+      .replace(/¹/g, "^1")
+      .replace(/⁻/g, "^-")
+      .replace(/ˣ/g, "^x")
+      .replace(/ⁱ/g, "^i")
+      .replace(/ⱼ/g, "_j")
+      .replace(/₁/g, "_1")
+      .replace(/₂/g, "_2")
+      .replace(/₃/g, "_3")
+      .replace(/✓/g, "[ok]")
+      .replace(/✗/g, "[x]")
+      .replace(/✦/g, "*")
+      .replace(/[^\x00-\x7E]/g, "?");  // any remaining non-ASCII -> ?
+  }
 
-  // Spinner keyframes
-  const sty = document.createElement('style');
-  sty.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
-  document.head.appendChild(sty);
-</script>
-</body>
-</html>
+  /* ── Colors ── */
+  const COLORS = {
+    accent:    [192, 57, 43],
+    accent2:   [217, 119, 6],
+    blue:      [37, 99, 235],
+    purple:    [108, 92, 231],
+    dark:      [26, 26, 46],
+    gray:      [100, 100, 100],
+    lightGray: [200, 200, 200],
+    white:     [255, 255, 255],
+    bgLight:   [248, 248, 248],
+    bgCallInfo:    [238, 246, 255],
+    bgCallTip:     [238, 251, 243],
+    bgCallWarn:    [254, 246, 240],
+    bgCallNote:    [245, 245, 245],
+    bgCallImp:     [253, 240, 240],
+    borderInfo:    [33, 150, 243],
+    borderTip:     [39, 174, 96],
+    borderWarn:    [230, 126, 34],
+    borderNote:    [136, 136, 136],
+    borderImp:     [192, 57, 43],
+    tableBg:   [44, 62, 80],
+  };
+
+  /* ── PDF generation ── */
+  async function generate(code, opts = {}) {
+    const onStatus = opts.onStatus || (() => {});
+
+    onStatus("parse");
+    const summary = parseSummary(code);
+
+    onStatus("render");
+    await ensureLibs();
+
+    let bgImageData = null;
+    try {
+      bgImageData = await loadImageAsBase64("121.avif");
+    } catch (e) {
+      console.warn("Could not load background image", e);
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const marginL = 16;
+    const marginR = 16;
+    const maxW = pageW - marginL - marginR;
+    let y = 20;
+
+    function addBackground() {
+      if (bgImageData) {
+        doc.addImage(bgImageData, "JPEG", 0, 0, pageW, pageH);
+      }
+    }
+    
+    // Add background to the first page
+    addBackground();
+
+    /* ── Helpers ── */
+    function checkBreak(need) {
+      if (y + need > pageH - 18) {
+        doc.addPage();
+        addBackground();
+        y = 20;
+      }
+    }
+
+    function setColor(rgb) {
+      doc.setTextColor(rgb[0], rgb[1], rgb[2]);
+    }
+
+    function drawText(text, x, fontSize, style, color, lineH) {
+      doc.setFont("Helvetica", style);
+      doc.setFontSize(fontSize);
+      setColor(color);
+      const clean = sanitize(text);
+      const lines = doc.splitTextToSize(clean, maxW - (x - marginL));
+      const blockH = lines.length * lineH;
+      checkBreak(blockH);
+      lines.forEach((line) => {
+        checkBreak(lineH);
+        doc.text(line, x, y);
+        y += lineH;
+      });
+    }
+
+    function drawRule(color, thickness) {
+      doc.setDrawColor(color[0], color[1], color[2]);
+      doc.setLineWidth(thickness);
+      doc.line(marginL, y, pageW - marginR, y);
+      y += 3;
+    }
+
+    /* ── Section renderers ── */
+
+    function renderHeading(text) {
+      y += 6;
+      checkBreak(14);
+
+      // Accent bar
+      doc.setFillColor(...COLORS.accent);
+      doc.rect(marginL, y - 5, 3, 8, "F");
+
+      drawText(text, marginL + 7, 16, "bold", COLORS.dark, 7);
+      y += 1;
+      drawRule(COLORS.lightGray, 0.3);
+      y += 2;
+    }
+
+    function renderSubheading(text) {
+      y += 4;
+      checkBreak(10);
+      drawText(text, marginL, 13, "bold", COLORS.blue, 6);
+      y += 2;
+    }
+
+    function renderParagraph(text) {
+      checkBreak(8);
+      drawText(text, marginL, 10.5, "normal", COLORS.dark, 5);
+      y += 3;
+    }
+
+    function renderList(items, numbered) {
+      checkBreak(6);
+      (items || []).forEach((item, i) => {
+        const prefix = numbered ? `${i + 1}.  ` : "-  ";
+        drawText(prefix + item, marginL + 4, 10.5, "normal", COLORS.dark, 5);
+        y += 1;
+      });
+      y += 2;
+    }
+
+    function renderDefinition(term, definition) {
+      checkBreak(14);
+
+      // Purple left bar
+      doc.setFillColor(...COLORS.purple);
+      doc.rect(marginL, y - 4, 2.5, 10, "F");
+
+      // Background
+      doc.setFillColor(247, 245, 255);
+      doc.rect(marginL + 2.5, y - 4, maxW - 2.5, 10, "F");
+
+      drawText(term + ":  " + sanitize(definition), marginL + 6, 10.5, "italic", COLORS.purple, 5);
+      y += 4;
+    }
+
+    function renderCallout(title, text, variant) {
+      const v = variant || "info";
+      let bgColor, borderColor, titleColor;
+
+      switch (v) {
+        case "tip":       bgColor = COLORS.bgCallTip;  borderColor = COLORS.borderTip;  titleColor = COLORS.borderTip;  break;
+        case "warning":   bgColor = COLORS.bgCallWarn; borderColor = COLORS.borderWarn; titleColor = COLORS.borderWarn; break;
+        case "note":      bgColor = COLORS.bgCallNote; borderColor = COLORS.borderNote; titleColor = COLORS.borderNote; break;
+        case "important": bgColor = COLORS.bgCallImp;  borderColor = COLORS.borderImp;  titleColor = COLORS.borderImp;  break;
+        default:          bgColor = COLORS.bgCallInfo;  borderColor = COLORS.borderInfo;  titleColor = COLORS.borderInfo;
+      }
+
+      const cleanTitle = sanitize(title || v.toUpperCase());
+      const cleanText = sanitize(text || "");
+
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(10);
+      const textLines = doc.splitTextToSize(cleanText, maxW - 12);
+      const boxH = 8 + textLines.length * 4.5 + 4;
+
+      checkBreak(boxH + 4);
+
+      // Background box
+      doc.setFillColor(...bgColor);
+      doc.roundedRect(marginL, y - 2, maxW, boxH, 2, 2, "F");
+
+      // Left border bar
+      doc.setFillColor(...borderColor);
+      doc.rect(marginL, y - 2, 2.5, boxH, "F");
+
+      // Title
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(10.5);
+      setColor(titleColor);
+      doc.text(cleanTitle, marginL + 6, y + 4);
+
+      // Body
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(10);
+      setColor(COLORS.dark);
+      let ty = y + 10;
+      textLines.forEach((line) => {
+        doc.text(line, marginL + 6, ty);
+        ty += 4.5;
+      });
+
+      y += boxH + 4;
+    }
+
+    function renderTable(headers, rows) {
+      checkBreak(20);
+      doc.autoTable({
+        startY: y,
+        head: [headers.map(h => sanitize(h))],
+        body: (rows || []).map(row => row.map(cell => sanitize(cell))),
+        styles: {
+          font: "Helvetica",
+          fontSize: 9.5,
+          cellPadding: 3,
+          textColor: COLORS.dark,
+        },
+        headStyles: {
+          fillColor: COLORS.tableBg,
+          textColor: COLORS.white,
+          fontStyle: "bold",
+          fontSize: 9.5,
+        },
+        alternateRowStyles: {
+          fillColor: [245, 245, 245],
+        },
+        margin: { left: marginL, right: marginR },
+      });
+      y = doc.lastAutoTable.finalY + 6;
+    }
+
+    function renderFormula(label, expression) {
+      checkBreak(18);
+
+      // Box background
+      doc.setFillColor(250, 250, 250);
+      doc.setDrawColor(220, 220, 220);
+      doc.roundedRect(marginL, y - 2, maxW, 16, 2, 2, "FD");
+
+      // Label
+      if (label) {
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(8.5);
+        setColor(COLORS.gray);
+        doc.text(sanitize(label).toUpperCase(), marginL + 4, y + 3);
+      }
+
+      // Expression centered
+      doc.setFont("Helvetica", "italic");
+      doc.setFontSize(13);
+      setColor(COLORS.dark);
+      const exprClean = sanitize(expression);
+      const tw = doc.getTextWidth(exprClean);
+      doc.text(exprClean, marginL + (maxW - tw) / 2, y + 11);
+
+      y += 20;
+    }
+
+    function renderQuote(text, author) {
+      checkBreak(16);
+
+      const cleanText = sanitize(text);
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(10);
+      const lines = doc.splitTextToSize('"' + cleanText + '"', maxW - 12);
+      const boxH = lines.length * 5 + (author ? 10 : 4);
+
+      // Background
+      doc.setFillColor(253, 248, 247);
+      doc.roundedRect(marginL, y - 2, maxW, boxH, 2, 2, "F");
+
+      // Left bar
+      doc.setFillColor(...COLORS.accent);
+      doc.rect(marginL, y - 2, 2.5, boxH, "F");
+
+      // Quote text
+      doc.setFont("Helvetica", "italic");
+      doc.setFontSize(10.5);
+      setColor([68, 68, 68]);
+      let qy = y + 3;
+      lines.forEach((line) => {
+        doc.text(line, marginL + 6, qy);
+        qy += 5;
+      });
+
+      // Author
+      if (author) {
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(9);
+        setColor(COLORS.gray);
+        doc.text("-- " + sanitize(author), marginL + 6, qy + 2);
+      }
+
+      y += boxH + 4;
+    }
+
+    function renderCode(language, code) {
+      const cleanCode = sanitize(code || "");
+      const codeLines = cleanCode.split("\n");
+
+      doc.setFont("Courier", "normal");
+      doc.setFontSize(8.5);
+
+      const lineH = 4;
+      const boxH = codeLines.length * lineH + 10 + (language ? 6 : 0);
+      checkBreak(boxH);
+
+      // Dark background
+      doc.setFillColor(30, 30, 46);
+      doc.roundedRect(marginL, y - 2, maxW, boxH, 2, 2, "F");
+
+      let cy = y + 3;
+
+      // Language badge
+      if (language) {
+        doc.setFont("Courier", "bold");
+        doc.setFontSize(7.5);
+        doc.setTextColor(150, 150, 170);
+        doc.text(language.toUpperCase(), marginL + 4, cy);
+        cy += 6;
+      }
+
+      // Code lines
+      doc.setFont("Courier", "normal");
+      doc.setFontSize(8.5);
+      doc.setTextColor(212, 212, 212);
+      codeLines.forEach((line) => {
+        doc.text(line, marginL + 4, cy);
+        cy += lineH;
+      });
+
+      y += boxH + 4;
+    }
+
+    function renderDivider() {
+      y += 4;
+      drawRule(COLORS.lightGray, 0.4);
+      y += 4;
+    }
+
+    function renderTakeaways(items) {
+      checkBreak(14);
+
+      const cleanItems = (items || []).map(i => sanitize(i));
+
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(10);
+      let totalLines = 0;
+      cleanItems.forEach(item => {
+        totalLines += doc.splitTextToSize("-  " + item, maxW - 14).length;
+      });
+      const boxH = 12 + totalLines * 5 + 6;
+
+      checkBreak(boxH);
+
+      // Gradient-ish background
+      doc.setFillColor(254, 249, 240);
+      doc.setDrawColor(240, 221, 214);
+      doc.roundedRect(marginL, y - 2, maxW, boxH, 3, 3, "FD");
+
+      // Title
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(13);
+      setColor(COLORS.accent);
+      doc.text("Key Takeaways", marginL + 6, y + 7);
+
+      let ty = y + 14;
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(10);
+      setColor(COLORS.dark);
+
+      cleanItems.forEach((item) => {
+        const lines = doc.splitTextToSize("-  " + item, maxW - 14);
+        lines.forEach((line) => {
+          checkBreak(5);
+          doc.text(line, marginL + 6, ty);
+          ty += 5;
+        });
+        ty += 1;
+      });
+
+      y = ty + 4;
+    }
+
+    /* ── Title Page ── */
+    checkBreak(30);
+
+    // Title bar accent
+    doc.setFillColor(...COLORS.accent);
+    doc.rect(marginL, y - 4, maxW, 2, "F");
+    y += 4;
+
+    // Title
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(22);
+    setColor(COLORS.dark);
+    const titleLines = doc.splitTextToSize(sanitize(summary.title || "Lecture Summary"), maxW);
+    titleLines.forEach((line) => {
+      doc.text(line, marginL, y);
+      y += 9;
+    });
+    y += 1;
+
+    // Subtitle
+    if (summary.subtitle) {
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(14);
+      setColor(COLORS.gray);
+      doc.text(sanitize(summary.subtitle), marginL, y);
+      y += 8;
+    }
+
+    // Course & Author
+    if (summary.course || summary.author) {
+      doc.setFont("Helvetica", "italic");
+      doc.setFontSize(10);
+      setColor(COLORS.gray);
+      const meta = [summary.course, summary.author].filter(Boolean).map(sanitize).join("  |  ");
+      doc.text(meta, marginL, y);
+      y += 6;
+    }
+
+    // Separator
+    y += 2;
+    drawRule(COLORS.lightGray, 0.5);
+    y += 4;
+
+    /* ── Render sections ── */
+    (summary.sections || []).forEach((sec) => {
+      switch (sec.type) {
+        case "heading":     renderHeading(sec.text);                          break;
+        case "subheading":  renderSubheading(sec.text);                      break;
+        case "paragraph":   renderParagraph(sec.text);                       break;
+        case "list":        renderList(sec.items, sec.style === "numbered"); break;
+        case "definition":  renderDefinition(sec.term, sec.definition);     break;
+        case "callout":     renderCallout(sec.title, sec.text, sec.variant);break;
+        case "table":       renderTable(sec.headers, sec.rows);             break;
+        case "formula":     renderFormula(sec.label, sec.expression);       break;
+        case "quote":       renderQuote(sec.text, sec.author);              break;
+        case "code":        renderCode(sec.language, sec.code);             break;
+        case "divider":     renderDivider();                                break;
+        case "takeaways":   renderTakeaways(sec.items);                     break;
+      }
+    });
+
+    onStatus("export");
+
+    /* ── Save ── */
+    const filename =
+      (summary.title || "lecture")
+        .replace(/[^a-zA-Z0-9 ]/g, "")
+        .trim()
+        .replace(/\s+/g, "_") + ".pdf";
+
+    doc.save(filename);
+    onStatus("done");
+  }
+
+  /* ── Expose globally ── */
+  window.LecturePDF = { generate };
+})();
